@@ -1,0 +1,102 @@
+{
+  "joao.silva@email.com": {
+    "nome": "João Silva",
+    "idade": 33,
+    "cidade_estado": "São Paulo, SP",
+    "livros_digitais": 10,
+    "livros_fisicos": 8,
+    "preferencia": "Físico",
+    "horas_estudo": 6,
+    "horas_entretenimento": 5
+  },
+  "maria.souza@email.com": {
+    "nome": "Maria Souza",
+    "idade": 28,
+    "cidade_estado": "Rio de Janeiro, RJ",
+    "livros_digitais": 15,
+    "livros_fisicos": 4,
+    "preferencia": "Digital",
+    "horas_estudo": 9,
+    "horas_entretenimento": 3
+  },
+  "carlos.pereira@email.com": {
+    "nome": "Carlos Pereira",
+    "idade": 45,
+    "cidade_estado": "Belo Horizonte, MG",
+    "livros_digitais": 6,
+    "livros_fisicos": 12,
+    "preferencia": "Físico",
+    "horas_estudo": 5,
+    "horas_entretenimento": 7
+  },
+  "ana.costa@email.com": {
+    "nome": "Ana Costa",
+    "idade": 24,
+    "cidade_estado": "Curitiba, PR",
+    "livros_digitais": 13,
+    "livros_fisicos": 5,
+    "preferencia": "Digital",
+    "horas_estudo": 10,
+    "horas_entretenimento": 4
+  },
+  "gabriel.escobar@gmail.com": {
+    "nome": "Gabriel Escobar",
+    "idade": 31,
+    "cidade_estado": "Fortaleza, CE",
+    "livros_digitais": 11,
+    "livros_fisicos": 6,
+    "preferencia": "Digital",
+    "horas_estudo": 8,
+    "horas_entretenimento": 5
+  },
+  "matheus1903@gmail.com": {
+    "nome": "Matheus Castro",
+    "idade": 27,
+    "cidade_estado": "Brasília, DF",
+    "livros_digitais": 14,
+    "livros_fisicos": 7,
+    "preferencia": "Digital",
+    "horas_estudo": 12,
+    "horas_entretenimento": 6
+  },
+  "samuel.andrade@gmail.com": {
+    "nome": "Samuel Andrade",
+    "idade": 36,
+    "cidade_estado": "Salvador, BA",
+    "livros_digitais": 5,
+    "livros_fisicos": 9,
+    "preferencia": "Físico",
+    "horas_estudo": 4,
+    "horas_entretenimento": 8
+  },
+  "vinicastro@gmail.com": {
+    "nome": "Vinícius Castro",
+    "idade": 30,
+    "cidade_estado": "Porto Alegre, RS",
+    "livros_digitais": 8,
+    "livros_fisicos": 6,
+    "preferencia": "Digital",
+    "horas_estudo": 7,
+    "horas_entretenimento": 6
+  },
+  "julinhacastro1907@gmail.com": {
+    "nome": "Julinha Ferreira Castro",
+    "idade": 21,
+    "cidade_estado": "Recife, PE",
+    "livros_digitais": 17,
+    "livros_fisicos": 2,
+    "preferencia": "Digital",
+    "horas_estudo": 11,
+    "horas_entretenimento": 2
+  },
+  "albuquerquegustavo@hotmail.com": {
+    "nome": "Gustavo Albuquerque",
+    "idade": 39,
+    "cidade_estado": "Manaus, AM",
+    "livros_digitais": 3,
+    "livros_fisicos": 15,
+    "preferencia": "Físico",
+    "horas_estudo": 3,
+    "horas_entretenimento": 9
+  }
+}
