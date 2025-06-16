@@ -63,18 +63,7 @@ def cadastrar_conta():
     cadastro = Cadastro(nome, idade, email, senha,livros_fisicos, livros_digitais,horas_estudo, horas_entretenimento,preferencia, estado, cidade)
 
 
-
-
 # Define a função principal de cadastro de conta
-def cadastrar_conta():
-    pass
-
-
-
-def voltar_menu():
-
-    pass
-
 
 def obter_cidades(sigla_estado):
     try:
@@ -105,7 +94,8 @@ def validar_numeros(novo_texto):  # Adicione o parâmetro
 def validar_letras_espacos(novo_texto):  # Adicione o parâmetro
     return all(c.isalpha() or c.isspace() for c in novo_texto) or novo_texto == ""
 
-
+def logar():
+    pass
 
 ctk.set_appearance_mode("light")  # ou "light"
 
@@ -188,6 +178,36 @@ label_rodape.pack(pady=5)
 
 #frame login
 frame_login=ctk.CTkFrame(janela,fg_color="#ffffff")
+label_login=ctk.CTkLabel(frame_login,text="Informe seus dados:",fg_color="#ffffff",text_color="blue",font=("Arial", 20))
+label_login.pack(pady=2)
+label_avisologin=ctk.CTkLabel(frame_login,text=" ",fg_color="#ffffff",text_color="blue",font=("Arial", 20))
+label_avisologin.pack(pady=2)
+
+#1-entrada email
+label_nome = ctk.CTkLabel(frame_login, text="Digite seu email:",text_color="#000000",anchor="w",width=300)
+label_nome.pack(pady=(2, 0))
+
+entrada_nome = ctk.CTkEntry(frame_login,width=300)
+entrada_nome.pack(pady=2)
+
+#2-entrada senha
+label_senhalogin = ctk.CTkLabel(frame_login,text="Digite sua senha:",text_color="#000000",anchor="w",width=300)
+label_senhalogin.pack(pady=(2, 0))
+
+entrada_senhalogin = ctk.CTkEntry(frame_login,width=300,show="*")
+entrada_senhalogin.pack(pady=2)
+
+
+#botão logar
+botao_logar = ctk.CTkButton(frame_login, text="Logar",fg_color="blue",text_color="#ffffff",width=300,command=logar)
+botao_logar.pack(pady=2)
+#botão voltar
+botao_voltarinicial=ctk.CTkButton(frame_login, text="Voltar",fg_color="blue",text_color="#ffffff",width=300,command=voltar_inicial)
+botao_voltarinicial.pack()
+
+
+
+
 
 #frame cadastro
 frame_cadastro=ctk.CTkFrame(janela,fg_color="#ffffff")
@@ -277,8 +297,15 @@ combobox_cidade.pack(pady=10)
 # Botão de cadastro
 botao_cadastrar = ctk.CTkButton(frame_cadastro, text="Cadastrar",fg_color="blue",text_color="#ffffff",width=300,command=cadastrar_conta())
 botao_cadastrar.pack(pady=2)
+
+#botão de voltar
 botao_voltarinicial=ctk.CTkButton(frame_cadastro, text="Voltar",fg_color="blue",text_color="#ffffff",width=300,command=voltar_inicial)
 botao_voltarinicial.pack()
+
+
+
+
+
 
 
 
