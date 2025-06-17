@@ -9,6 +9,21 @@ import re
 with open("estados.json", "r", encoding="utf-8") as arquivo:
     estados_siglas = json.load(arquivo)
 
+with open(r"dados_usuarios.json", "r", encoding="utf-8") as arquivo:
+            arquivo_lido = json.load(arquivo)
+            dados_nome= arquivo_lido["nome"]
+            dados_nome = arquivo_lido["nome"]
+            dados_idade = arquivo_lido["idade"]
+            dados_senha = arquivo_lido["senha"]
+            dados_livrosdigitais = arquivo_lido["livros_digitais"]
+            dados_livrosfisicos = arquivo_lido["livros_fisicos"]
+            dados_preferencia = arquivo_lido["preferencia"]
+            dados_estudo = arquivo_lido["horas_estudo"]
+            dados_entretenimento = arquivo_lido["horas_entretenimento"]
+            dados_estado = arquivo_lido["estado"]
+            dados_cidade = arquivo_lido["cidade"]
+
+
 def mostra_login():
     frame_topoinicial.pack_forget()
     tela_inicial.pack_forget()
@@ -37,6 +52,7 @@ def cadastrar_conta():
     preferencia = combobox_preferencia.get()  
     estado = combobox_estado.get()
     cidade = combobox_cidade.get()
+    
 
     entradas = [
         nome, idade, email, senha,
@@ -96,6 +112,49 @@ def validar_letras_espacos(novo_texto):  # Adicione o parâmetro
 
 def logar():
     pass
+
+def aviso_sistema():
+    global frame_aviso, frame_cadastro
+    
+    # Esconde o frame de cadastro
+    frame_cadastro.pack_forget()
+    
+    # Cria o frame_aviso se não existir
+    if frame_aviso is None:
+        frame_aviso = ctk.CTkFrame(janela, fg_color="#ffffff")
+        
+        label_aviso_sucesso = ctk.CTkLabel(
+            frame_aviso,
+            text="CONTA CADASTRADA COM SUCESSO!",
+            text_color="green",
+            font=("Arial", 18, "bold")
+        )
+        label_aviso_sucesso.pack(pady=20)
+
+        botao_login_aviso = ctk.CTkButton(
+            frame_aviso,
+            text="Fazer Login",
+            command=lambda: [frame_aviso.pack_forget(), mostra_login()],
+            width=200
+        )
+        botao_login_aviso.pack(pady=10)
+
+        botao_sair_aviso = ctk.CTkButton(
+            frame_aviso,
+            text="Sair do Sistema",
+            command=sair_sistema,
+            width=200
+        )
+        botao_sair_aviso.pack(pady=10)
+    
+    # Mostra o frame de aviso
+    frame_aviso.pack(fill="both", expand=True)
+
+def sair_sistema():
+    janela.destroy()  # Fecha a janela principal
+    # Ou qualquer outra lógica de saída que você preferir
+
+
 
 ctk.set_appearance_mode("light")  # ou "light"
 
@@ -295,7 +354,7 @@ combobox_cidade.set("Primeiro selecione o estado")
 combobox_cidade.pack(pady=10)
 
 # Botão de cadastro
-botao_cadastrar = ctk.CTkButton(frame_cadastro, text="Cadastrar",fg_color="blue",text_color="#ffffff",width=300,command=cadastrar_conta())
+botao_cadastrar = ctk.CTkButton(frame_cadastro, text="Cadastrar",fg_color="blue",text_color="#ffffff",width=300,command=cadastrar_conta)
 botao_cadastrar.pack(pady=2)
 
 #botão de voltar
@@ -305,7 +364,8 @@ botao_voltarinicial.pack()
 
 
 
-
+## Frame aviso (criação básica sem pack)
+frame_aviso=None
 
 
 
@@ -316,18 +376,20 @@ class Cadastro:
     Essa Classe tem o objetivo de cadastrar os usuários,recebendo os dados básicos para ser possível fazer a conta,conferir se os dados são permitidos
     e assim cadastrar a conta
     """
-    def __init__(self,nome,email,estado,cidade,qlivrofisico,qlivrodigital,preferencia_leitura,horas_estudo,horas_entretenimento,senha):
+    def __init__(self,nome, idade, email, senha,livros_fisicos, livros_digitais,horas_estudo, horas_entretenimento,preferencia, estado, cidade):
         #RECEBE OS DADOS NECESSÁRIOS PARA CADASTRAR UMA CONTA
         self.nome=nome
         self.email =email
         self.estado=estado
         self.cidade=cidade
-        self.qlivrofisico=qlivrofisico
-        self.qlivrodigital=qlivrodigital
-        self.qpreferencia_leitura=preferencia_leitura
+        self.qlivrofisico=livros_fisicos
+        self.qlivrodigital=livros_digitais
+        self.qpreferencia_leitura=preferencia
         self.horas_estudo=horas_estudo
         self.horas_entretenimento=horas_entretenimento
         self.senha=senha
+        self.idade=idade
+        print(self.email)
 
        
         #chama função conferir código
@@ -337,52 +399,43 @@ class Cadastro:
 
     def conferir_senha(self):
         #FUNÇÃO UTILIZADA PARA CONFERIR SE A SENHA É VÁLIDA OU NÃO
-        tentativas = 3
-        while tentativas > 0:
-            if 4 <= len(self.senha) and len(self.senha) <= 20:
-                #print("Senha aceita.")
-                self.email_valido()  # Chama o próximo passo do cadastro
-            #return para a função que estava sendo rodada e deixa rodando apenas a função que rodará
-                return
-            else:
-                label_aviso.config(text="Tamanho da senha inválido",text_color="red")
-                return
+        
+        if 4 <= len(self.senha) and len(self.senha) <= 20:
+            
+            self.email_valido()  
+            # Chama o próximo passo do cadastro
+        #return para a função que estava sendo rodada e deixa rodando apenas a função que rodará
+            return
+        else:
+            label_aviso.configure(text="Tamanho da senha inválido",text_color="red")
+            return
 
         
 
     def email_valido(self):
         #FUNÇÃO UTILIZADA PARA CONFERIR SE O EMAIL É VÁLIDO OU NÃO
-        dominios_validos = [
-            'gmail.com', 'outlook.com', 'hotmail.com',
-            'yahoo.com', 'icloud.com'
-        ]
+        dominios_validos = ['gmail.com', 'outlook.com', '...']  # Seus domínios
 
-        tentativas_email = 3
-        while tentativas_email != 0:
-            # VERIFICA SE O FORMATO DO EMAIL ESTÁ ESCRITO CORRETAMENTE
-            if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', self.email):
-                label_aviso.config(text="FORMATO DE EMAIL INVÁLIDO",text_color="red")
-                return
-
-                continue  # volta pro início do while para validar de novo,caso esteja correto,irá passar pelo verificador
-
-            # VERIFICA APENAS O DOMÍNIO,SEPARA TODO O RESTO E PEGA APENAS A PARTE DO DOMÍNIO
-            dominio = self.email.split('@')[1].lower()
-            if dominio not in dominios_validos:
-                label_aviso.config(text="UTILIZE UM DOMÍNIO VÁLIDO PARA O EMAIL",text_color="red")
-                return
-
-                # continuar o loop sem parar
-                continue
-
-        # Se chegou aqui, formato e domínio estão corretos
-            break
-
-        else:
-            print("Limite de tentativas atingido. Encerrando o processo de cadastro.")
-            return
+        
+    
+    # Verificação 1: Formato básico
+        if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', self.email.strip()):
+            label_aviso.configure(text="Formato inválido", text_color="red")
+            return False
+    
+    # Verificação 2: Domínio válido
+        dominio = self.email.split('@')[1].lower()
+        if dominio not in dominios_validos:
+            label_aviso.configure(text="Domínio não aceito", text_color="red")
+            return False
 
         self.conferir_email()
+        return True  # Todas as validações passaram
+           
+
+        
+
+        
 
     
     def conferir_email(self):
@@ -390,41 +443,52 @@ class Cadastro:
         
         with open(r"dados_usuarios.json", "r", encoding="utf-8") as arquivo:
             arquivo_lido = json.load(arquivo)
-            dados_conta = arquivo_lido["senha"]
-            dados_familia = arquivo_lido["familia"]
-            dados_quantidade = arquivo_lido["membros"]
-            dados_pontos = arquivo_lido["pontos"]
-            dados_apartamento = arquivo_lido["apartamento"]
-            dados_codigov = arquivo_lido["verificador"]
+            dados_nome= arquivo_lido["nome"]
+            dados_idade = arquivo_lido["idade"]
+            dados_senha = arquivo_lido["senha"]
+            dados_livrosdigitais = arquivo_lido["livros_digitais"]
+            dados_livrosfisicos = arquivo_lido["livros_fisicos"]
+            dados_preferencia = arquivo_lido["preferencia"]
+            dados_estudo = arquivo_lido["horas_estudo"]
+            dados_entretenimento = arquivo_lido["horas_entretenimento"]
+            dados_estado = arquivo_lido["estado"]
+            dados_cidade = arquivo_lido["cidade"]
 
-            if self.email in dados_conta:
-                print("EMAIL JÁ POSSUI UMA CONTA.")
-                tentativas = 3
-                while tentativas != 0:
-                    resposta1 = input(
-                    "Deseja tentar refazer a conta ou ir para tela de login caso já possua conta? (refazer/login) ").strip().lower()
-                    if resposta1 in ["login", "tela de login", "logi"]:
-                        login()
-                        return
-                    elif resposta1 in ["refazer", "retentar", "conta", "refazer conta"]:
-                        self.email = input("Digite novamente seu email: ").strip()
-                        self.conferir_email()
-                        return
-                    else:
-                        print("Resposta inválida")
-                        tentativas -= 1
-                        print(f"Tentativas restantes {tentativas}")
-                else:
-                    print(
-                    "Limite de tentativas atingido. Encerrando o processo de cadastro.")
-                    return
+            if self.email.strip() in dados_nome:#dessa forma verificará se o email está já cadastrado ou não
+                label_aviso.configure(text="Email já cadastrado.",text_color="red")
+                
+                return
+            
             else:
-                self.conferir_nome()  # Continua o processo normalmente
-    def conferir_localidade():
+                self.salvar_dados()  # Continua o processo normalmente
+    
+    def salvar_dados(self):
+        dados_nome[self.email] = self.nome
+        dados_senha[self.email] = self.senha
+        dados_livrosfisicos[self.email] = self.qlivrofisico
+        dados_livrosdigitais[self.email] = self.qlivrodigital
+        dados_preferencia[self.email] = self.qpreferencia_leitura
+        dados_estudo[self.email] = self.horas_estudo
+        dados_entretenimento[self.email] = self.horas_entretenimento
+        dados_estado[self.email] = self.estado
+        dados_cidade[self.email] = self.cidade
 
-        pass
-    def conferir_nome():
-        pass
+# Supondo que a idade esteja em self.idade (você não informou, mas seria assim)
+# Se não tiver, pode ignorar essa linha ou ajustar conforme o seu código
+        dados_idade[self.email] = self.idade
+
+# Salvar tudo novamente no arquivo JSON, mantendo o formato
+    with open(r"dados_usuarios.json", "w", encoding="utf-8") as arquivo:
+        json.dump({"nome": dados_nome,"idade": dados_idade,"senha": dados_senha,"livros_digitais": dados_livrosdigitais,"livros_fisicos": dados_livrosfisicos,"preferencia": dados_preferencia,
+                   "horas_estudo": dados_estudo,"horas_entretenimento": dados_entretenimento,
+                   "estado": dados_estado,
+                    "cidade": dados_cidade }, arquivo, indent=4, ensure_ascii=False)
+        
+
+        aviso_sistema()
+
+
+
 
 
 #frame menu

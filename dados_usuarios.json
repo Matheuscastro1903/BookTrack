@@ -1,102 +1,122 @@
 {
-  "joao.silva@email.com": {
-    "nome": "João Silva",
-    "idade": 33,
-    "cidade_estado": "São Paulo, SP",
-    "livros_digitais": 10,
-    "livros_fisicos": 8,
-    "preferencia": "Físico",
-    "horas_estudo": 6,
-    "horas_entretenimento": 5
-  },
-  "maria.souza@email.com": {
-    "nome": "Maria Souza",
-    "idade": 28,
-    "cidade_estado": "Rio de Janeiro, RJ",
-    "livros_digitais": 15,
-    "livros_fisicos": 4,
-    "preferencia": "Digital",
-    "horas_estudo": 9,
-    "horas_entretenimento": 3
-  },
-  "carlos.pereira@email.com": {
-    "nome": "Carlos Pereira",
-    "idade": 45,
-    "cidade_estado": "Belo Horizonte, MG",
-    "livros_digitais": 6,
-    "livros_fisicos": 12,
-    "preferencia": "Físico",
-    "horas_estudo": 5,
-    "horas_entretenimento": 7
-  },
-  "ana.costa@email.com": {
-    "nome": "Ana Costa",
-    "idade": 24,
-    "cidade_estado": "Curitiba, PR",
-    "livros_digitais": 13,
-    "livros_fisicos": 5,
-    "preferencia": "Digital",
-    "horas_estudo": 10,
-    "horas_entretenimento": 4
-  },
-  "gabriel.escobar@gmail.com": {
-    "nome": "Gabriel Escobar",
-    "idade": 31,
-    "cidade_estado": "Fortaleza, CE",
-    "livros_digitais": 11,
-    "livros_fisicos": 6,
-    "preferencia": "Digital",
-    "horas_estudo": 8,
-    "horas_entretenimento": 5
-  },
-  "matheus1903@gmail.com": {
-    "nome": "Matheus Castro",
-    "idade": 27,
-    "cidade_estado": "Brasília, DF",
-    "livros_digitais": 14,
-    "livros_fisicos": 7,
-    "preferencia": "Digital",
-    "horas_estudo": 12,
-    "horas_entretenimento": 6
-  },
-  "samuel.andrade@gmail.com": {
-    "nome": "Samuel Andrade",
-    "idade": 36,
-    "cidade_estado": "Salvador, BA",
-    "livros_digitais": 5,
-    "livros_fisicos": 9,
-    "preferencia": "Físico",
-    "horas_estudo": 4,
-    "horas_entretenimento": 8
-  },
-  "vinicastro@gmail.com": {
-    "nome": "Vinícius Castro",
-    "idade": 30,
-    "cidade_estado": "Porto Alegre, RS",
-    "livros_digitais": 8,
-    "livros_fisicos": 6,
-    "preferencia": "Digital",
-    "horas_estudo": 7,
-    "horas_entretenimento": 6
-  },
-  "julinhacastro1907@gmail.com": {
-    "nome": "Julinha Ferreira Castro",
-    "idade": 21,
-    "cidade_estado": "Recife, PE",
-    "livros_digitais": 17,
-    "livros_fisicos": 2,
-    "preferencia": "Digital",
-    "horas_estudo": 11,
-    "horas_entretenimento": 2
-  },
-  "albuquerquegustavo@hotmail.com": {
-    "nome": "Gustavo Albuquerque",
-    "idade": 39,
-    "cidade_estado": "Manaus, AM",
-    "livros_digitais": 3,
-    "livros_fisicos": 15,
-    "preferencia": "Físico",
-    "horas_estudo": 3,
-    "horas_entretenimento": 9
-  }
+    "nome": {
+        "joao.silva@email.com": "João Silva",
+        "maria.souza@email.com": "Maria Souza",
+        "carlos.pereira@email.com": "Carlos Pereira",
+        "ana.costa@email.com": "Ana Costa",
+        "gabriel.escobar@gmail.com": "Gabriel Escobar",
+        "matheus1903@gmail.com": "Matheus Castro",
+        "samuel.andrade@gmail.com": "Samuel Andrade",
+        "vinicastro@gmail.com": "Vinícius Castro",
+        "julinhacastro1907@gmail.com": "Julinha Ferreira Castro",
+        "albuquerquegustavo@hotmail.com": "Gustavo Albuquerque"
+    },
+    "idade": {
+        "joao.silva@email.com": 33,
+        "maria.souza@email.com": 28,
+        "carlos.pereira@email.com": 45,
+        "ana.costa@email.com": 24,
+        "gabriel.escobar@gmail.com": 31,
+        "matheus1903@gmail.com": 27,
+        "samuel.andrade@gmail.com": 36,
+        "vinicastro@gmail.com": 30,
+        "julinhacastro1907@gmail.com": 21,
+        "albuquerquegustavo@hotmail.com": 39
+    },
+    "senha": {
+        "joao.silva@email.com": "joao123",
+        "maria.souza@email.com": "maria456",
+        "carlos.pereira@email.com": "carlos789",
+        "ana.costa@email.com": "ana321",
+        "gabriel.escobar@gmail.com": "gabriel2024",
+        "matheus1903@gmail.com": "matheus123",
+        "samuel.andrade@gmail.com": "samuel777",
+        "vinicastro@gmail.com": "vinicius1903",
+        "julinhacastro1907@gmail.com": "julinha2023",
+        "albuquerquegustavo@hotmail.com": "gustavo999"
+    },
+    "livros_digitais": {
+        "joao.silva@email.com": 10,
+        "maria.souza@email.com": 15,
+        "carlos.pereira@email.com": 6,
+        "ana.costa@email.com": 13,
+        "gabriel.escobar@gmail.com": 11,
+        "matheus1903@gmail.com": 14,
+        "samuel.andrade@gmail.com": 5,
+        "vinicastro@gmail.com": 8,
+        "julinhacastro1907@gmail.com": 17,
+        "albuquerquegustavo@hotmail.com": 3
+    },
+    "livros_fisicos": {
+        "joao.silva@email.com": 8,
+        "maria.souza@email.com": 4,
+        "carlos.pereira@email.com": 12,
+        "ana.costa@email.com": 5,
+        "gabriel.escobar@gmail.com": 6,
+        "matheus1903@gmail.com": 7,
+        "samuel.andrade@gmail.com": 9,
+        "vinicastro@gmail.com": 6,
+        "julinhacastro1907@gmail.com": 2,
+        "albuquerquegustavo@hotmail.com": 15
+    },
+    "preferencia": {
+        "joao.silva@email.com": "Físico",
+        "maria.souza@email.com": "Digital(kindle)",
+        "carlos.pereira@email.com": "Físico",
+        "ana.costa@email.com": "Digital(kindle)",
+        "gabriel.escobar@gmail.com": "Digital(kindle)",
+        "matheus1903@gmail.com": "Digital(kindle)",
+        "samuel.andrade@gmail.com": "Físico",
+        "vinicastro@gmail.com": "Digital(kindle)",
+        "julinhacastro1907@gmail.com": "Digital(kindle)",
+        "albuquerquegustavo@hotmail.com": "Físico"
+    },
+    "horas_estudo": {
+        "joao.silva@email.com": 6,
+        "maria.souza@email.com": 9,
+        "carlos.pereira@email.com": 5,
+        "ana.costa@email.com": 10,
+        "gabriel.escobar@gmail.com": 8,
+        "matheus1903@gmail.com": 12,
+        "samuel.andrade@gmail.com": 4,
+        "vinicastro@gmail.com": 7,
+        "julinhacastro1907@gmail.com": 11,
+        "albuquerquegustavo@hotmail.com": 3
+    },
+    "horas_entretenimento": {
+        "joao.silva@email.com": 5,
+        "maria.souza@email.com": 3,
+        "carlos.pereira@email.com": 7,
+        "ana.costa@email.com": 4,
+        "gabriel.escobar@gmail.com": 5,
+        "matheus1903@gmail.com": 6,
+        "samuel.andrade@gmail.com": 8,
+        "vinicastro@gmail.com": 6,
+        "julinhacastro1907@gmail.com": 2,
+        "albuquerquegustavo@hotmail.com": 9
+    },
+    "estado": {
+        "joao.silva@email.com": "São Paulo",
+        "maria.souza@email.com": "Rio de Janeiro",
+        "carlos.pereira@email.com": "Minas Gerais",
+        "ana.costa@email.com": "Paraná",
+        "gabriel.escobar@gmail.com": "Ceará",
+        "matheus1903@gmail.com": "Distrito Federal",
+        "samuel.andrade@gmail.com": "Bahia",
+        "vinicastro@gmail.com": "Rio Grande do Sul",
+        "julinhacastro1907@gmail.com": "Pernambuco",
+        "albuquerquegustavo@hotmail.com": "Amazonas"
+    },
+    "cidade": {
+        "joao.silva@email.com": "São Paulo",
+        "maria.souza@email.com": "Rio de Janeiro",
+        "carlos.pereira@email.com": "Belo Horizonte",
+        "ana.costa@email.com": "Curitiba",
+        "gabriel.escobar@gmail.com": "Fortaleza",
+        "matheus1903@gmail.com": "Brasília",
+        "samuel.andrade@gmail.com": "Salvador",
+        "vinicastro@gmail.com": "Porto Alegre",
+        "julinhacastro1907@gmail.com": "Recife",
+        "albuquerquegustavo@hotmail.com": "Manaus"
+    }
 }
