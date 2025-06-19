@@ -9,7 +9,10 @@
         "samuel.andrade@gmail.com": "Samuel Andrade",
         "vinicastro@gmail.com": "Vinícius Castro",
         "julinhacastro1907@gmail.com": "Julinha Ferreira Castro",
-        "albuquerquegustavo@hotmail.com": "Gustavo Albuquerque"
+        "albuquerquegustavo@hotmail.com": "Gustavo Albuquerque",
+        "matheusdecastro1903@gmail.com": "Matheus de Castro",
+        "pedroaalmeida@gmail.com": "Pedro Arthur Almeida",
+        "cleytonufrpe@gmail.com": "Cleyton Cavunt"
     },
     "idade": {
         "joao.silva@email.com": 33,
@@ -21,7 +24,10 @@
         "samuel.andrade@gmail.com": 36,
         "vinicastro@gmail.com": 30,
         "julinhacastro1907@gmail.com": 21,
-        "albuquerquegustavo@hotmail.com": 39
+        "albuquerquegustavo@hotmail.com": 39,
+        "matheusdecastro1903@gmail.com": "18",
+        "pedroaalmeida@gmail.com": "21",
+        "cleytonufrpe@gmail.com": "30"
     },
     "senha": {
         "joao.silva@email.com": "joao123",
@@ -33,7 +39,10 @@
         "samuel.andrade@gmail.com": "samuel777",
         "vinicastro@gmail.com": "vinicius1903",
         "julinhacastro1907@gmail.com": "julinha2023",
-        "albuquerquegustavo@hotmail.com": "gustavo999"
+        "albuquerquegustavo@hotmail.com": "gustavo999",
+        "matheusdecastro1903@gmail.com": "12345",
+        "pedroaalmeida@gmail.com": "54321",
+        "cleytonufrpe@gmail.com": "102030"
     },
     "livros_digitais": {
         "joao.silva@email.com": 10,
@@ -45,7 +54,10 @@
         "samuel.andrade@gmail.com": 5,
         "vinicastro@gmail.com": 8,
         "julinhacastro1907@gmail.com": 17,
-        "albuquerquegustavo@hotmail.com": 3
+        "albuquerquegustavo@hotmail.com": 3,
+        "matheusdecastro1903@gmail.com": "2",
+        "pedroaalmeida@gmail.com": "2",
+        "cleytonufrpe@gmail.com": "7"
     },
     "livros_fisicos": {
         "joao.silva@email.com": 8,
@@ -57,7 +69,10 @@
         "samuel.andrade@gmail.com": 9,
         "vinicastro@gmail.com": 6,
         "julinhacastro1907@gmail.com": 2,
-        "albuquerquegustavo@hotmail.com": 15
+        "albuquerquegustavo@hotmail.com": 15,
+        "matheusdecastro1903@gmail.com": "3",
+        "pedroaalmeida@gmail.com": "4",
+        "cleytonufrpe@gmail.com": "10"
     },
     "preferencia": {
         "joao.silva@email.com": "Físico",
@@ -69,7 +84,10 @@
         "samuel.andrade@gmail.com": "Físico",
         "vinicastro@gmail.com": "Digital(kindle)",
         "julinhacastro1907@gmail.com": "Digital(kindle)",
-        "albuquerquegustavo@hotmail.com": "Físico"
+        "albuquerquegustavo@hotmail.com": "Físico",
+        "matheusdecastro1903@gmail.com": "Livro físico",
+        "pedroaalmeida@gmail.com": "Livro físico",
+        "cleytonufrpe@gmail.com": "Livro físico"
     },
     "horas_estudo": {
         "joao.silva@email.com": 6,
@@ -81,7 +99,10 @@
         "samuel.andrade@gmail.com": 4,
         "vinicastro@gmail.com": 7,
         "julinhacastro1907@gmail.com": 11,
-        "albuquerquegustavo@hotmail.com": 3
+        "albuquerquegustavo@hotmail.com": 3,
+        "matheusdecastro1903@gmail.com": "10",
+        "pedroaalmeida@gmail.com": "10",
+        "cleytonufrpe@gmail.com": "12"
     },
     "horas_entretenimento": {
         "joao.silva@email.com": 5,
@@ -93,7 +114,10 @@
         "samuel.andrade@gmail.com": 8,
         "vinicastro@gmail.com": 6,
         "julinhacastro1907@gmail.com": 2,
-        "albuquerquegustavo@hotmail.com": 9
+        "albuquerquegustavo@hotmail.com": 9,
+        "matheusdecastro1903@gmail.com": "5",
+        "pedroaalmeida@gmail.com": "4",
+        "cleytonufrpe@gmail.com": "5"
     },
     "estado": {
         "joao.silva@email.com": "São Paulo",
@@ -105,7 +129,10 @@
         "samuel.andrade@gmail.com": "Bahia",
         "vinicastro@gmail.com": "Rio Grande do Sul",
         "julinhacastro1907@gmail.com": "Pernambuco",
-        "albuquerquegustavo@hotmail.com": "Amazonas"
+        "albuquerquegustavo@hotmail.com": "Amazonas",
+        "matheusdecastro1903@gmail.com": "Pernambuco",
+        "pedroaalmeida@gmail.com": "Pernambuco",
+        "cleytonufrpe@gmail.com": "Pernambuco"
     },
     "cidade": {
         "joao.silva@email.com": "São Paulo",
@@ -117,6 +144,9 @@
         "samuel.andrade@gmail.com": "Salvador",
         "vinicastro@gmail.com": "Porto Alegre",
         "julinhacastro1907@gmail.com": "Recife",
-        "albuquerquegustavo@hotmail.com": "Manaus"
+        "albuquerquegustavo@hotmail.com": "Manaus",
+        "matheusdecastro1903@gmail.com": "Vicência",
+        "pedroaalmeida@gmail.com": "Limoeiro",
+        "cleytonufrpe@gmail.com": "Recife"
     }
 }

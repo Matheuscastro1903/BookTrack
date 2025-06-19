@@ -1,5 +1,5 @@
 import customtkinter as ctk
-import tkinter as tk
+
 from tkinter import ttk
 import requests
 import json
@@ -24,14 +24,49 @@ with open(r"dados_usuarios.json", "r", encoding="utf-8") as arquivo:
             dados_cidade = arquivo_lido["cidade"]
 
 
-def mostra_login():
+def mostrar_login():
     frame_topoinicial.pack_forget()
     tela_inicial.pack_forget()
+    frame_aviso.pack_forget()
     frame_login.pack(fill="both",expand=True)
-def mostrar_cadastro():
-    frame_topoinicial.pack_forget()
-    tela_inicial.pack_forget()
-    frame_cadastro.pack(fill="both",expand=True)
+
+def conferir_logar():
+    email = entrada_nome.get().strip()
+    senha = entrada_senhalogin.get().strip()
+
+    # Limpa aviso anterior
+    label_avisologin.configure(text="", text_color="blue")
+
+    # Verifica campos vazios
+    if email == "" or senha == "":
+        label_avisologin.configure(text="Preencha todos os campos.", text_color="red")
+        return
+
+    logar(email,senha)
+
+def logar(email,senha):
+    try:
+        with open("dados_usuarios.json", "r", encoding="utf-8") as arquivo:
+            dados = json.load(arquivo)
+            dados_senha=dados["senha"]
+
+        # Verifica se o email existe
+        if email not in dados_senha:
+            label_avisologin.configure(text="Email não cadastrado.", text_color="red")
+            return
+
+        # Verifica a senha
+        if dados_senha[email] != senha:
+            label_avisologin.configure(text="Senha incorreta.", text_color="red")
+            return
+        
+        mostrar_menu(email)
+        
+        
+    except FileNotFoundError:
+        label_avisologin.configure(text="Arquivo de dados não encontrado.", text_color="red")
+    except json.JSONDecodeError:
+        label_avisologin.configure(text="Erro ao ler os dados.", text_color="red")
     
 
 def voltar_inicial():
@@ -40,7 +75,14 @@ def voltar_inicial():
     frame_topoinicial.pack(fill="x")
     tela_inicial.pack(fill="both",expand=True)
 
+
+def mostrar_cadastro():
+    frame_topoinicial.pack_forget()
+    tela_inicial.pack_forget()
+    frame_cadastro.pack(fill="both",expand=True)
+    
 def cadastrar_conta():
+    
     nome = entrada_nome.get()
     idade = entrada_idade.get()
     email = entrada_email.get()
@@ -81,6 +123,13 @@ def cadastrar_conta():
 
 # Define a função principal de cadastro de conta
 
+def mostrar_menu(email):
+    frame_login.pack_forget()
+    frame_menu.pack(fill="both",expand=True)
+
+
+
+
 def obter_cidades(sigla_estado):
     try:
         url = f"https://servicodados.ibge.gov.br/api/v1/localidades/estados/{sigla_estado}/municipios"
@@ -110,45 +159,18 @@ def validar_numeros(novo_texto):  # Adicione o parâmetro
 def validar_letras_espacos(novo_texto):  # Adicione o parâmetro
     return all(c.isalpha() or c.isspace() for c in novo_texto) or novo_texto == ""
 
-def logar():
-    pass
+
+
+
 
 def aviso_sistema():
-    global frame_aviso, frame_cadastro
-    
-    # Esconde o frame de cadastro
     frame_cadastro.pack_forget()
+    frame_aviso.pack(fill="both",expand=True)
+  
     
     # Cria o frame_aviso se não existir
-    if frame_aviso is None:
-        frame_aviso = ctk.CTkFrame(janela, fg_color="#ffffff")
-        
-        label_aviso_sucesso = ctk.CTkLabel(
-            frame_aviso,
-            text="CONTA CADASTRADA COM SUCESSO!",
-            text_color="green",
-            font=("Arial", 18, "bold")
-        )
-        label_aviso_sucesso.pack(pady=20)
-
-        botao_login_aviso = ctk.CTkButton(
-            frame_aviso,
-            text="Fazer Login",
-            command=lambda: [frame_aviso.pack_forget(), mostra_login()],
-            width=200
-        )
-        botao_login_aviso.pack(pady=10)
-
-        botao_sair_aviso = ctk.CTkButton(
-            frame_aviso,
-            text="Sair do Sistema",
-            command=sair_sistema,
-            width=200
-        )
-        botao_sair_aviso.pack(pady=10)
     
-    # Mostra o frame de aviso
-    frame_aviso.pack(fill="both", expand=True)
+    
 
 def sair_sistema():
     janela.destroy()  # Fecha a janela principal
@@ -190,7 +212,7 @@ label_inical.pack(pady=30)
 botao_login = ctk.CTkButton(
     tela_inicial,
     text="Login",            # Texto no botão
-    command=mostra_login,          # Função que será executada ao clicar
+    command=mostrar_login,          # Função que será executada ao clicar
     width=150,                     # Largura
     height=40,                     # Altura
     corner_radius=10,              # Arredondamento das bordas
@@ -258,7 +280,7 @@ entrada_senhalogin.pack(pady=2)
 
 
 #botão logar
-botao_logar = ctk.CTkButton(frame_login, text="Logar",fg_color="blue",text_color="#ffffff",width=300,command=logar)
+botao_logar = ctk.CTkButton(frame_login, text="Logar",fg_color="blue",text_color="#ffffff",width=300,command=conferir_logar)
 botao_logar.pack(pady=2)
 #botão voltar
 botao_voltarinicial=ctk.CTkButton(frame_login, text="Voltar",fg_color="blue",text_color="#ffffff",width=300,command=voltar_inicial)
@@ -272,6 +294,8 @@ botao_voltarinicial.pack()
 frame_cadastro=ctk.CTkFrame(janela,fg_color="#ffffff")
 label_cadastro=ctk.CTkLabel(frame_cadastro,text="Informe seus dados:",fg_color="#ffffff",text_color="blue",font=("Arial", 20))
 label_cadastro.pack(pady=2)
+
+
 label_aviso=ctk.CTkLabel(frame_cadastro,text=" ",fg_color="#ffffff",text_color="blue",font=("Arial", 20))
 label_aviso.pack(pady=2)
 
@@ -365,7 +389,18 @@ botao_voltarinicial.pack()
 
 
 ## Frame aviso (criação básica sem pack)
-frame_aviso=None
+frame_aviso=ctk.CTkFrame(janela,fg_color="#ffffff")
+ # Label de aviso
+label = ctk.CTkLabel(frame_aviso, text="Cadastro realizado com sucesso!", font=("Arial", 20), text_color="green")
+label.pack(pady=(40, 20))
+
+    # Botão para ir para login
+botao_login = ctk.CTkButton(frame_aviso, text="Ir para Login", width=200, command=mostrar_login)
+botao_login.pack(pady=(0, 10))
+
+    # Botão para sair do sistema
+botao_sair = ctk.CTkButton(frame_aviso, text="Sair do Sistema", width=200, fg_color="red", hover_color="#cc0000", command=sair_sistema)
+botao_sair.pack()
 
 
 
@@ -478,8 +513,8 @@ class Cadastro:
         dados_idade[self.email] = self.idade
 
 # Salvar tudo novamente no arquivo JSON, mantendo o formato
-    with open(r"dados_usuarios.json", "w", encoding="utf-8") as arquivo:
-        json.dump({"nome": dados_nome,"idade": dados_idade,"senha": dados_senha,"livros_digitais": dados_livrosdigitais,"livros_fisicos": dados_livrosfisicos,"preferencia": dados_preferencia,
+        with open(r"dados_usuarios.json", "w", encoding="utf-8") as arquivo:
+            json.dump({"nome": dados_nome,"idade": dados_idade,"senha": dados_senha,"livros_digitais": dados_livrosdigitais,"livros_fisicos": dados_livrosfisicos,"preferencia": dados_preferencia,
                    "horas_estudo": dados_estudo,"horas_entretenimento": dados_entretenimento,
                    "estado": dados_estado,
                     "cidade": dados_cidade }, arquivo, indent=4, ensure_ascii=False)
@@ -492,7 +527,7 @@ class Cadastro:
 
 
 #frame menu
-frame_menu=ctk.CTkFrame(janela) 
+frame_menu=ctk.CTkFrame(janela,fg_color="green") 
 
 
 ############################
