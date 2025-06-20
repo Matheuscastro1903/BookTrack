@@ -1,9 +1,30 @@
 import customtkinter as ctk
-
+import random
 from tkinter import ttk
 import requests
 import json
 import re
+
+mensagens_leitura = [
+    "📚 'Um livro é um sonho que você segura nas mãos.' Neil Gaiman",
+    "🧠 'A leitura é para a mente o que o exercício é para o corpo.'  Joseph Addison",
+    "🌱 'Quem lê vive mil vidas antes de morrer.'  George R.R. Martin",
+    "🔍 'Ler é viajar sem sair do lugar.'  Emily Dickinson",
+    "📝 'Livros são espelhos: só se vê neles o que temos dentro.'  Carlos Ruiz Zafón",
+    "💡 'Ler não é fugir do mundo, é entendê-lo melhor.'  Clarice Lispector",
+    "🔥 'Um livro é uma arma carregada na casa ao lado.'  Ray Bradbury",
+    "⏳ 'Leia mil livros, e suas palavras fluirão como rio.'  Virginia Woolf",
+    "🧭 'A leitura dá asas à imaginação e rumo à razão.'  Monteiro Lobato",
+    "🎯 'A leitura forma o caráter e aguça o espírito.'  Cora Coralina",
+    "🔓 'A leitura liberta a alma do cárcere da ignorância.' Malala Yousafzai",
+    "🏛️ 'Livros são os melhores amigos que o tempo não corrói.'  Fernando Pessoa",
+    "🌌 'Em cada página, um universo a ser descoberto.'  Jorge Luis Borges",
+    "🎭 'Quem lê, amplia a vida com outras almas.'  Machado de Assis",
+    "🕯️ 'Leitura é luz em tempos escuros.'  Victor Hugo"
+]
+
+
+
 
 # Carregar o dicionário de estados e siglas a partir do arquivo JSON
 with open("estados.json", "r", encoding="utf-8") as arquivo:
@@ -48,18 +69,18 @@ def logar(email,senha):
     try:
         with open("dados_usuarios.json", "r", encoding="utf-8") as arquivo:
             dados = json.load(arquivo)
-            dados_senha=dados["senha"]
 
-        # Verifica se o email existe
-        if email not in dados_senha:
+        # Verifica se o e-mail existe em qualquer uma das seções (ideal: nome ou senha)
+        if email not in dados["senha"]:
             label_avisologin.configure(text="Email não cadastrado.", text_color="red")
             return
 
-        # Verifica a senha
-        if dados_senha[email] != senha:
+        # Verifica se a senha confere
+        if dados["senha"][email] != senha:
             label_avisologin.configure(text="Senha incorreta.", text_color="red")
             return
-        
+
+        # Acesso permitido
         mostrar_menu(email)
         
         
@@ -527,7 +548,78 @@ class Cadastro:
 
 
 #frame menu
-frame_menu=ctk.CTkFrame(janela,fg_color="green") 
+frame_menu=ctk.CTkFrame(janela,fg_color="#ffffff")
+
+
+frame_topo = ctk.CTkFrame(frame_menu, bg="#1A73E8", height=80)
+#pack(fill="x") faz o cabeçalho (topo) ocupar toda a largura da janela (eixo X), mas apenas a altura necessária para o conteúdo.
+frame_topo.pack(fill="x")
+
+titulo = ctk.CTkLabel(frame_topo,text="BookTrack ",bg="#1A73E8",fg="white",font=("Arial", 24, "bold"))
+titulo.pack(pady=20)
+
+
+# Divisão em colunas principais (menu lateral e conteúdo)
+#Esse frame serve apenas para ser base para outros frames
+frame_conteudo = ctk.CTkFrame(frame_menu, bg="#f0f2f5")
+frame_conteudo.pack(fill="both", expand=True)
+
+
+
+# Menu lateral,preencherá apenas a parte em relação ao eixo y
+#preencherá apenas a parte esqueda da tela em relação ao eixo y 
+#width=200 serve para indicar quantos pixels o frame deverá usar na largura
+frame_menu = ctk.CTkFrame(frame_conteudo, bg="white", width=200)
+#caso não use o fill,o frame ocupará apenas o espcaço necessário para o conteúdo
+frame_menu.pack(side="left", fill="y")
+
+
+#Relief define como obotão aparecerá(pesquisar estilos de botões)
+#cursos="mostrar cursos do mouse se clicar em cima"
+botao1 = ctk.CTkButton(frame_menu,text="📘 Estimativa ",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=ver_intrucoes,cursor="hand2")
+#quando pady tiver dois parâmetros(um é para criar espaços para cima,o outro para baixo)
+#anchor="w" serve para alinhar o botão em relação a alguma cordenada geográfica
+botao1.pack(fill="x", pady=(20, 10))
+
+botao2 = ctk.CTkButton(frame_menu,text="🚀 Cálculo estudo",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=aviso_procedimento,cursor="hand2")
+
+botao2.pack(fill="x", pady=10)
+
+botao3=ctk.CTkButton(frame_menu,text="📄 Cálculo leitura ",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
+botao3.pack(fill="x", pady=10)
+
+botao4=ctk.CTkButton(frame_menu,text="📚 Pesquisar livro ",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
+botao4.pack(fill="x", pady=10)
+
+botao5=ctk.CTkButton(frame_menu,text="🎁 Lista de desejos",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
+botao5.pack(fill="x", pady=10)
+
+botao6=ctk.CTkButton(frame_menu,text="❤ Sobre nós",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
+botao6.pack(fill="x", pady=10)
+
+botao7=ctk.CTkButton(frame_menu,text="✍️ Feedback",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
+botao7.pack(fill="x", pady=10)
+
+
+botao8=ctk.CTkButton(frame_menu,text="✔ Atualizar conta",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
+botao8.pack(fill="x", pady=10)
+
+botao9=ctk.CTkButton(frame_menu,text="🗑 Deletar conta",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
+botao9.pack(fill="x", pady=10)
+
+
+
+
+# Area principal de conteúdo
+#padx=30, pady=30 serve para criar espaços em relação ao frame
+frame_principal = ctk.CTkFrame(frame_conteudo, bg="#ffffff", padx=30, pady=30)
+frame_principal.pack(side="left", fill="both", expand=True)
+
+texto_bem_vindo = ctk.CTkLabel(frame_principal,text="Bem-vindo ao BookTrack ",bg="white",fg="#202124",font=("Arial", 18, "bold"))
+texto_bem_vindo.pack(pady=(0, 20))
+
+texto_instrucao = ctk.CTkLabel(frame_principal,text=random.choice(mensagens_leitura),bg="white",fg="#5f6368",wraplength=500,justify="left",font=("Arial", 12))
+texto_instrucao.pack()
 
 
 ############################

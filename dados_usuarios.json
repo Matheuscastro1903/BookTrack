@@ -12,7 +12,8 @@
         "albuquerquegustavo@hotmail.com": "Gustavo Albuquerque",
         "matheusdecastro1903@gmail.com": "Matheus de Castro",
         "pedroaalmeida@gmail.com": "Pedro Arthur Almeida",
-        "cleytonufrpe@gmail.com": "Cleyton Cavunt"
+        "cleytonufrpe@gmail.com": "Cleyton Cavunt",
+        "matheusinho123@gmail.com": "Matheus de Castro"
     },
     "idade": {
         "joao.silva@email.com": 33,
@@ -27,7 +28,8 @@
         "albuquerquegustavo@hotmail.com": 39,
         "matheusdecastro1903@gmail.com": "18",
         "pedroaalmeida@gmail.com": "21",
-        "cleytonufrpe@gmail.com": "30"
+        "cleytonufrpe@gmail.com": "30",
+        "matheusinho123@gmail.com": "18"
     },
     "senha": {
         "joao.silva@email.com": "joao123",
@@ -42,7 +44,8 @@
         "albuquerquegustavo@hotmail.com": "gustavo999",
         "matheusdecastro1903@gmail.com": "12345",
         "pedroaalmeida@gmail.com": "54321",
-        "cleytonufrpe@gmail.com": "102030"
+        "cleytonufrpe@gmail.com": "102030",
+        "matheusinho123@gmail.com": "123456"
     },
     "livros_digitais": {
         "joao.silva@email.com": 10,
@@ -57,7 +60,8 @@
         "albuquerquegustavo@hotmail.com": 3,
         "matheusdecastro1903@gmail.com": "2",
         "pedroaalmeida@gmail.com": "2",
-        "cleytonufrpe@gmail.com": "7"
+        "cleytonufrpe@gmail.com": "7",
+        "matheusinho123@gmail.com": "4"
     },
     "livros_fisicos": {
         "joao.silva@email.com": 8,
@@ -72,7 +76,8 @@
         "albuquerquegustavo@hotmail.com": 15,
         "matheusdecastro1903@gmail.com": "3",
         "pedroaalmeida@gmail.com": "4",
-        "cleytonufrpe@gmail.com": "10"
+        "cleytonufrpe@gmail.com": "10",
+        "matheusinho123@gmail.com": "7"
     },
     "preferencia": {
         "joao.silva@email.com": "Físico",
@@ -87,7 +92,8 @@
         "albuquerquegustavo@hotmail.com": "Físico",
         "matheusdecastro1903@gmail.com": "Livro físico",
         "pedroaalmeida@gmail.com": "Livro físico",
-        "cleytonufrpe@gmail.com": "Livro físico"
+        "cleytonufrpe@gmail.com": "Livro físico",
+        "matheusinho123@gmail.com": "Livro físico"
     },
     "horas_estudo": {
         "joao.silva@email.com": 6,
@@ -102,7 +108,8 @@
         "albuquerquegustavo@hotmail.com": 3,
         "matheusdecastro1903@gmail.com": "10",
         "pedroaalmeida@gmail.com": "10",
-        "cleytonufrpe@gmail.com": "12"
+        "cleytonufrpe@gmail.com": "12",
+        "matheusinho123@gmail.com": "4"
     },
     "horas_entretenimento": {
         "joao.silva@email.com": 5,
@@ -117,7 +124,8 @@
         "albuquerquegustavo@hotmail.com": 9,
         "matheusdecastro1903@gmail.com": "5",
         "pedroaalmeida@gmail.com": "4",
-        "cleytonufrpe@gmail.com": "5"
+        "cleytonufrpe@gmail.com": "5",
+        "matheusinho123@gmail.com": "1"
     },
     "estado": {
         "joao.silva@email.com": "São Paulo",
@@ -132,7 +140,8 @@
         "albuquerquegustavo@hotmail.com": "Amazonas",
         "matheusdecastro1903@gmail.com": "Pernambuco",
         "pedroaalmeida@gmail.com": "Pernambuco",
-        "cleytonufrpe@gmail.com": "Pernambuco"
+        "cleytonufrpe@gmail.com": "Pernambuco",
+        "matheusinho123@gmail.com": "Bahia"
     },
     "cidade": {
         "joao.silva@email.com": "São Paulo",
@@ -147,6 +156,7 @@
         "albuquerquegustavo@hotmail.com": "Manaus",
         "matheusdecastro1903@gmail.com": "Vicência",
         "pedroaalmeida@gmail.com": "Limoeiro",
-        "cleytonufrpe@gmail.com": "Recife"
+        "cleytonufrpe@gmail.com": "Recife",
+        "matheusinho123@gmail.com": "Adustina"
     }
 }
