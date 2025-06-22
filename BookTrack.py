@@ -44,7 +44,7 @@ with open(r"dados_usuarios.json", "r", encoding="utf-8") as arquivo:
             dados_estado = arquivo_lido["estado"]
             dados_cidade = arquivo_lido["cidade"]
 
-
+ 
 def mostrar_login():
     frame_topoinicial.pack_forget()
     tela_inicial.pack_forget()
@@ -52,14 +52,18 @@ def mostrar_login():
     frame_login.pack(fill="both",expand=True)
 
 def conferir_logar():
-    email = entrada_nome.get().strip()
+    global entrada_emaillogin, entrada_senhalogin, label_avisologin
+    email = entrada_emaillogin.get().strip()
     senha = entrada_senhalogin.get().strip()
 
     # Limpa aviso anterior
     label_avisologin.configure(text="", text_color="blue")
 
     # Verifica campos vazios
+    print(email)
+    print(senha)
     if email == "" or senha == "":
+    
         label_avisologin.configure(text="Preencha todos os campos.", text_color="red")
         return
 
@@ -151,6 +155,7 @@ def mostrar_menu(email):
 
 
 
+
 def obter_cidades(sigla_estado):
     try:
         url = f"https://servicodados.ibge.gov.br/api/v1/localidades/estados/{sigla_estado}/municipios"
@@ -198,7 +203,45 @@ def sair_sistema():
     # Ou qualquer outra lógica de saída que você preferir
 
 
+def ver_estimativa():
+    frame_principal.configure(fg_color="#4CAF50")  # Verde
+    # restante do código aqui
 
+def calculo_estudo():
+    frame_principal.configure(fg_color="#2196F3")  # Azul
+    # restante do código aqui
+
+def calculo_leitura():
+    frame_principal.configure(fg_color="#FF9800")  # Laranja
+    # restante do código aqui
+
+def pesquisar_livro():
+    frame_principal.configure(fg_color="#9C27B0")  # Roxo
+    # restante do código aqui
+
+def lista_de_desejos():
+    frame_principal.configure(fg_color="#E91E63")  # Rosa
+    # restante do código aqui
+
+def sobre_nos():
+    frame_principal.configure(fg_color="#00BCD4")  # Ciano
+    # restante do código aqui
+
+def feedback():
+    frame_principal.configure(fg_color="#FFC107")  # Amarelo
+    # restante do código aqui
+
+def atualizar_conta():
+    frame_principal.configure(fg_color="#795548")  # Marrom
+    # restante do código aqui
+
+def deletar_conta():
+    frame_principal.configure(fg_color="#F44336")  # Vermelho
+    # restante do código aqui
+
+
+
+################################################################################################
 ctk.set_appearance_mode("light")  # ou "light"
 
 janela = ctk.CTk()
@@ -206,7 +249,7 @@ janela.title("BookTrack")
 janela.geometry("650x750+400+150")
 janela.resizable(False, False)
 
-################################################################
+
 #frame topo tela inical
 frame_topoinicial=ctk.CTkFrame(janela,fg_color="Blue",height=80)
 label_topoinicial=ctk.CTkLabel(frame_topoinicial,text="BookTrack",fg_color="Blue",text_color="white",font=("Arial", 18))
@@ -286,11 +329,11 @@ label_avisologin=ctk.CTkLabel(frame_login,text=" ",fg_color="#ffffff",text_color
 label_avisologin.pack(pady=2)
 
 #1-entrada email
-label_nome = ctk.CTkLabel(frame_login, text="Digite seu email:",text_color="#000000",anchor="w",width=300)
-label_nome.pack(pady=(2, 0))
+label_emaillogin = ctk.CTkLabel(frame_login, text="Digite seu email:",text_color="#000000",anchor="w",width=300)
+label_emaillogin.pack(pady=(2, 0))
 
-entrada_nome = ctk.CTkEntry(frame_login,width=300)
-entrada_nome.pack(pady=2)
+entrada_emaillogin = ctk.CTkEntry(frame_login,width=300)
+entrada_emaillogin.pack(pady=2)
 
 #2-entrada senha
 label_senhalogin = ctk.CTkLabel(frame_login,text="Digite sua senha:",text_color="#000000",anchor="w",width=300)
@@ -548,77 +591,69 @@ class Cadastro:
 
 
 #frame menu
-frame_menu=ctk.CTkFrame(janela,fg_color="#ffffff")
+frame_menu = ctk.CTkFrame(janela, fg_color="#ffffff")
+#frame_menu.pack(fill="y", side="left")  # Posiciona o menu lateral na janela
 
-
-frame_topo = ctk.CTkFrame(frame_menu, bg="#1A73E8", height=80)
-#pack(fill="x") faz o cabeçalho (topo) ocupar toda a largura da janela (eixo X), mas apenas a altura necessária para o conteúdo.
+frame_topo = ctk.CTkFrame(frame_menu, fg_color="#1A73E8", height=80)
 frame_topo.pack(fill="x")
 
-titulo = ctk.CTkLabel(frame_topo,text="BookTrack ",bg="#1A73E8",fg="white",font=("Arial", 24, "bold"))
+titulo = ctk.CTkLabel(frame_topo, text="BookTrack", fg_color="#1A73E8", text_color="white", font=("Arial", 24, "bold"))
 titulo.pack(pady=20)
+####################################################################
 
+# Menu lateral dentro do conteúdo
+frame_lateral = ctk.CTkFrame(frame_menu, fg_color="white", width=200)
+frame_lateral.pack(side="left", fill="y")
 
-# Divisão em colunas principais (menu lateral e conteúdo)
-#Esse frame serve apenas para ser base para outros frames
-frame_conteudo = ctk.CTkFrame(frame_menu, bg="#f0f2f5")
+# Botões do menu (sem bd e relief, padx no pack)
+botao1 = ctk.CTkButton(frame_lateral, text="📘 Estimativa", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=ver_estimativa, cursor="hand2")
+botao1.pack(fill="x", pady=(20, 10), padx=20)
+
+botao2 = ctk.CTkButton(frame_lateral, text="🚀 Cálculo estudo", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=calculo_estudo, cursor="hand2")
+botao2.pack(fill="x", pady=10, padx=20)
+
+botao3 = ctk.CTkButton(frame_lateral, text="📄 Cálculo leitura", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=calculo_leitura, cursor="hand2")
+botao3.pack(fill="x", pady=10, padx=20)
+
+botao4 = ctk.CTkButton(frame_lateral, text="📚 Pesquisar livro", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=pesquisar_livro, cursor="hand2")
+botao4.pack(fill="x", pady=10, padx=20)
+
+botao5 = ctk.CTkButton(frame_lateral, text="🎁 Lista de desejos", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=lista_de_desejos, cursor="hand2")
+botao5.pack(fill="x", pady=10, padx=20)
+
+botao6 = ctk.CTkButton(frame_lateral, text="❤ Sobre nós", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=sobre_nos, cursor="hand2")
+botao6.pack(fill="x", pady=10, padx=20)
+
+botao7 = ctk.CTkButton(frame_lateral, text="✍️ Feedback", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=feedback, cursor="hand2")
+botao7.pack(fill="x", pady=10, padx=20)
+
+botao8 = ctk.CTkButton(frame_lateral, text="✔ Atualizar conta", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=atualizar_conta, cursor="hand2")
+botao8.pack(fill="x", pady=10, padx=20)
+
+botao9 = ctk.CTkButton(frame_lateral, text="🗑 Deletar conta", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", command=deletar_conta, cursor="hand2")
+botao9.pack(fill="x", pady=10, padx=20)
+
+# Área principal de conteúdo
+#Criação do frame conteúdo para fixar o frame principal
+frame_conteudo = ctk.CTkFrame(frame_menu, fg_color="#f0f2f5")
 frame_conteudo.pack(fill="both", expand=True)
 
+frame_principal = ctk.CTkFrame(frame_conteudo, fg_color="#ffffff")
+frame_principal.pack(fill="both", expand=True)
 
-
-# Menu lateral,preencherá apenas a parte em relação ao eixo y
-#preencherá apenas a parte esqueda da tela em relação ao eixo y 
-#width=200 serve para indicar quantos pixels o frame deverá usar na largura
-frame_menu = ctk.CTkFrame(frame_conteudo, bg="white", width=200)
-#caso não use o fill,o frame ocupará apenas o espcaço necessário para o conteúdo
-frame_menu.pack(side="left", fill="y")
-
-
-#Relief define como obotão aparecerá(pesquisar estilos de botões)
-#cursos="mostrar cursos do mouse se clicar em cima"
-botao1 = ctk.CTkButton(frame_menu,text="📘 Estimativa ",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=ver_intrucoes,cursor="hand2")
-#quando pady tiver dois parâmetros(um é para criar espaços para cima,o outro para baixo)
-#anchor="w" serve para alinhar o botão em relação a alguma cordenada geográfica
-botao1.pack(fill="x", pady=(20, 10))
-
-botao2 = ctk.CTkButton(frame_menu,text="🚀 Cálculo estudo",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=aviso_procedimento,cursor="hand2")
-
-botao2.pack(fill="x", pady=10)
-
-botao3=ctk.CTkButton(frame_menu,text="📄 Cálculo leitura ",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
-botao3.pack(fill="x", pady=10)
-
-botao4=ctk.CTkButton(frame_menu,text="📚 Pesquisar livro ",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
-botao4.pack(fill="x", pady=10)
-
-botao5=ctk.CTkButton(frame_menu,text="🎁 Lista de desejos",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
-botao5.pack(fill="x", pady=10)
-
-botao6=ctk.CTkButton(frame_menu,text="❤ Sobre nós",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
-botao6.pack(fill="x", pady=10)
-
-botao7=ctk.CTkButton(frame_menu,text="✍️ Feedback",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
-botao7.pack(fill="x", pady=10)
-
-
-botao8=ctk.CTkButton(frame_menu,text="✔ Atualizar conta",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
-botao8.pack(fill="x", pady=10)
-
-botao9=ctk.CTkButton(frame_menu,text="🗑 Deletar conta",bg="white",fg="#1A73E8",font=("Arial", 12),bd=0,relief="flat",anchor="w",padx=20,command=anexar_arquivo,cursor="hand2")
-botao9.pack(fill="x", pady=10)
-
-
-
-
-# Area principal de conteúdo
-#padx=30, pady=30 serve para criar espaços em relação ao frame
-frame_principal = ctk.CTkFrame(frame_conteudo, bg="#ffffff", padx=30, pady=30)
-frame_principal.pack(side="left", fill="both", expand=True)
-
-texto_bem_vindo = ctk.CTkLabel(frame_principal,text="Bem-vindo ao BookTrack ",bg="white",fg="#202124",font=("Arial", 18, "bold"))
+texto_bem_vindo = ctk.CTkLabel(frame_principal, text="Bem-vindo ao BookTrack", fg_color="#ffffff", text_color="#202124", font=("Arial", 18, "bold"))
 texto_bem_vindo.pack(pady=(0, 20))
 
-texto_instrucao = ctk.CTkLabel(frame_principal,text=random.choice(mensagens_leitura),bg="white",fg="#5f6368",wraplength=500,justify="left",font=("Arial", 12))
+texto_instrucao = ctk.CTkLabel(frame_principal, text=random.choice(mensagens_leitura), fg_color="#ffffff", text_color="#5f6368", wraplength=500, justify="left", font=("Arial", 12))
 texto_instrucao.pack()
 
 
