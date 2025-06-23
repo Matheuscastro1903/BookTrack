@@ -4,7 +4,8 @@ from tkinter import ttk
 import requests
 import json
 import re
-
+import csv
+import time
 mensagens_leitura = [
     "📚 'Um livro é um sonho que você segura nas mãos.' Neil Gaiman",
     "🧠 'A leitura é para a mente o que o exercício é para o corpo.'  Joseph Addison",
@@ -23,8 +24,7 @@ mensagens_leitura = [
     "🕯️ 'Leitura é luz em tempos escuros.'  Victor Hugo"
 ]
 
-
-
+nome_usuario=""
 
 # Carregar o dicionário de estados e siglas a partir do arquivo JSON
 with open("estados.json", "r", encoding="utf-8") as arquivo:
@@ -33,7 +33,7 @@ with open("estados.json", "r", encoding="utf-8") as arquivo:
 with open(r"dados_usuarios.json", "r", encoding="utf-8") as arquivo:
             arquivo_lido = json.load(arquivo)
             dados_nome= arquivo_lido["nome"]
-            dados_nome = arquivo_lido["nome"]
+            
             dados_idade = arquivo_lido["idade"]
             dados_senha = arquivo_lido["senha"]
             dados_livrosdigitais = arquivo_lido["livros_digitais"]
@@ -70,6 +70,7 @@ def conferir_logar():
     logar(email,senha)
 
 def logar(email,senha):
+    global nome_usuario
     try:
         with open("dados_usuarios.json", "r", encoding="utf-8") as arquivo:
             dados = json.load(arquivo)
@@ -85,7 +86,9 @@ def logar(email,senha):
             return
 
         # Acesso permitido
-        mostrar_menu(email)
+        nome_usuario= dados_nome[email] 
+        print(nome_usuario) 
+        mostrar_menu(email,nome_usuario)
         
         
     except FileNotFoundError:
@@ -104,6 +107,7 @@ def voltar_inicial():
 def mostrar_cadastro():
     frame_topoinicial.pack_forget()
     tela_inicial.pack_forget()
+
     frame_cadastro.pack(fill="both",expand=True)
     
 def cadastrar_conta():
@@ -148,12 +152,88 @@ def cadastrar_conta():
 
 # Define a função principal de cadastro de conta
 
-def mostrar_menu(email):
+def mostrar_menu(email,nome_usuario):
     frame_login.pack_forget()
+    #frame menu
+    frame_menu = ctk.CTkFrame(janela, fg_color="#ffffff")
+#frame_menu.pack(fill="y", side="left")  # Posiciona o menu lateral na janela
+
+    frame_topo = ctk.CTkFrame(frame_menu, fg_color="#1A73E8", height=80)
+    frame_topo.pack(fill="x")
+
+    titulo = ctk.CTkLabel(frame_topo, text="BookTrack", fg_color="#1A73E8", text_color="white", font=("Arial", 24, "bold"))
+    titulo.pack(pady=20)
+####################################################################
+
+# Menu lateral dentro do conteúdo
+    frame_lateral = ctk.CTkFrame(frame_menu, fg_color="white", width=200)
+    frame_lateral.pack(side="left", fill="y")
+
+    #CRIAÇÃO FRAME CONTEUDO
+    frame_conteudo = ctk.CTkFrame(frame_menu, fg_color="#f0f2f5")
+# Botões do menu (sem bd e relief, padx no pack)
+    botao1 = ctk.CTkButton(frame_lateral, text="📘 Estimativa", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: ver_estimativa(email, frame_principal), cursor="hand2")
+    botao1.pack(fill="x", pady=(20, 10), padx=20)
+
+    botao2 = ctk.CTkButton(frame_lateral, text="🚀 Cálculo estudo", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: calculo_estudo(email, frame_principal), cursor="hand2")
+    botao2.pack(fill="x", pady=10, padx=20)
+
+    botao3 = ctk.CTkButton(frame_lateral, text="📄 Cálculo leitura", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: calculo_leitura(email, frame_principal), cursor="hand2")
+    botao3.pack(fill="x", pady=10, padx=20)
+
+    botao4 = ctk.CTkButton(frame_lateral, text="🤑 Projeção de gastos", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: projecao_gastos(email, frame_principal), cursor="hand2")
+    botao4.pack(fill="x", pady=10, padx=20)
+
+    botao5 = ctk.CTkButton(frame_lateral, text="📚 Pesquisar livro", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: pesquisar_livro(frame_principal), cursor="hand2")
+    botao5.pack(fill="x", pady=10, padx=20)
+
+    
+    botao6 = ctk.CTkButton(frame_lateral, text="❤ Sobre nós", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: sobre_nos(frame_principal), cursor="hand2")
+    botao6.pack(fill="x", pady=10, padx=20)
+
+    botao7 = ctk.CTkButton(frame_lateral, text="✍️ Feedback", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: feedback(email, frame_principal), cursor="hand2")
+    botao7.pack(fill="x", pady=10, padx=20)
+
+    botao8 = ctk.CTkButton(frame_lateral, text="✔ Atualizar conta", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: atualizar_conta(email, frame_principal), cursor="hand2")
+    botao8.pack(fill="x", pady=10, padx=20)
+
+    botao9 = ctk.CTkButton(frame_lateral, text="🗑 Deletar conta", fg_color="white", text_color="#1A73E8", 
+                       font=("Arial", 12), anchor="w", 
+                       command=lambda: deletar_conta(email,frame_principal), cursor="hand2")
+    botao9.pack(fill="x", pady=10, padx=20)
+
+
+# Área principal de conteúdo
+#Criação do frame conteúdo para fixar o frame principal
+    
+    frame_conteudo.pack(fill="both", expand=True)
+
+    frame_principal = ctk.CTkFrame(frame_conteudo, fg_color="#ffffff")
+    frame_principal.pack(fill="both", expand=True)
+
+    texto_bem_vindo = ctk.CTkLabel(frame_principal, text=f"Bem-vindo ao BookTrack\n{nome_usuario}", fg_color="#ffffff", text_color="#202124", font=("Arial", 18, "bold"))
+    texto_bem_vindo.pack(pady=(0, 20))
+
+    texto_instrucao = ctk.CTkLabel(frame_principal, text=random.choice(mensagens_leitura), fg_color="#ffffff", text_color="#5f6368", wraplength=500, justify="left", font=("Arial", 12))
+    texto_instrucao.pack()
     frame_menu.pack(fill="both",expand=True)
-
-
-
+    
 
 
 def obter_cidades(sigla_estado):
@@ -202,42 +282,488 @@ def sair_sistema():
     janela.destroy()  # Fecha a janela principal
     # Ou qualquer outra lógica de saída que você preferir
 
+def ver_estimativa(email, frame_principal):
+    livros_lidosfisicos=int(dados_livrosfisicos[email])
+    livros_lidosdigitais=int(dados_livrosdigitais[email])
+    soma_livros=livros_lidosdigitais+livros_lidosfisicos
 
-def ver_estimativa():
-    frame_principal.configure(fg_color="#4CAF50")  # Verde
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+
+    label_texto = ctk.CTkLabel(frame_principal, text="Digite a quantidade de anos que você deseja estimar\nvisando descobrir a quantidade total de livros lidos em x anos:")  # Texto vazio para você preencher
+    label_texto.pack(pady=10)
+    entrada = ctk.CTkEntry(frame_principal,width=300)
+    entrada.pack(pady=10)
+    
+    botao_confirmar = ctk.CTkButton(
+    frame_principal,
+    text="Confirmar operação",            # Texto no botão
+    command=lambda:calcular_estimativa(entrada,label_saida,soma_livros),          # Função que será executada ao clicar
+    width=150,                     # Largura
+    height=40,                     # Altura
+    corner_radius=10,              # Arredondamento das bordas
+    fg_color="blue",               # Cor de fundo do botão
+    hover_color="darkblue",        # Cor ao passar o mouse
+    text_color="white",            # Cor do texto
+    font=("Arial", 14, "bold"),    # Fonte
+    cursor="hand2"                 # Cursor tipo mão
+    )
+    botao_confirmar.pack(pady=10)
+
+    label_saida = ctk.CTkLabel(frame_principal, text="")  # Você preencherá depois
+    label_saida.pack(pady=10)
+    
+
+def calcular_estimativa(entrada,label_saida,soma_livros):
+    valor_digitado = entrada.get().strip()
+    if not valor_digitado.isdigit():
+        label_saida.configure(text="Por favor, digite um número válido.", text_color="red")
+        return
+    anos = int(valor_digitado)
+    estimativa = anos * soma_livros
+    # Feedback simples com base na estimativa
+    if estimativa == 0:
+        mensagem = "Vamos começar a ler? Ainda dá tempo!"
+    elif estimativa < 10:
+        mensagem = f"Você pode ler cerca de {estimativa} livros. Que tal aumentar esse número?"
+    elif estimativa < 30:
+        mensagem = f"Boa! Estimativa de {estimativa} livros. Continue nesse ritmo!"
+    else:
+        mensagem = f"Incrível! Você pode ler até {estimativa} livros. Continue assim!"
+    
+    label_saida.configure(text=mensagem, text_color="green")
+    
+
+    pass
+
+def calculo_estudo(email, frame_principal):
+    # Pegando as horas de estudo semanais do usuário no JSON
+    horas_estudo_semanais = float(dados_estudo[email])
+
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+
+    label_texto = ctk.CTkLabel(
+        frame_principal,
+        text="Digite a quantidade de anos que você deseja estimar\nvisando descobrir a quantidade de horas totais\nde estudo em x anos:"
+    )
+    label_texto.pack(pady=10)
+
+    entrada = ctk.CTkEntry(frame_principal, width=300)
+    entrada.pack(pady=10)
+
+    label_saida = ctk.CTkLabel(frame_principal, text="")
+    label_saida.pack(pady=10)
+
+    botao_confirmar = ctk.CTkButton(
+        frame_principal,
+        text="Confirmar operação",
+        command=lambda: calcular_estudo(entrada, label_saida, horas_estudo_semanais),
+        width=150,
+        height=40,
+        corner_radius=10,
+        fg_color="blue",
+        hover_color="darkblue",
+        text_color="white",
+        font=("Arial", 14, "bold"),
+        cursor="hand2"
+    )
+    botao_confirmar.pack(pady=10)
+
+
+def calcular_estudo(entrada, label_saida, horas_estudo_semanais):
+    valor_digitado = entrada.get().strip()
+    if not valor_digitado.isdigit():
+        label_saida.configure(text="Por favor, digite um número válido.", text_color="red")
+        return
+    anos = int(valor_digitado)
+    total_horas = anos * 52 * horas_estudo_semanais  # 52 semanas por ano
+
+    # Feedback simples
+    if total_horas == 0:
+        mensagem = "Vamos começar a estudar? Nunca é tarde!"
+    elif total_horas < 200:
+        mensagem = f"Você vai estudar aproximadamente {total_horas:.1f} horas em {anos} anos. Pode aumentar o ritmo!"
+    elif total_horas < 800:
+        mensagem = f"Bom trabalho! Estimativa de {total_horas:.1f} horas de estudo em {anos} anos."
+    else:
+        mensagem = f"Excelente! Você dedicará cerca de {total_horas:.1f} horas aos estudos em {anos} anos. Continue assim!"
+
+    label_saida.configure(text=mensagem, text_color="green")
+
+
+def calculo_leitura(email, frame_principal):
+    # Pegando as horas de entretenimento semanais do usuário no JSON
+    horas_entretenimento_semanais = float(dados_entretenimento[email])
+
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+
+    label_texto = ctk.CTkLabel(
+        frame_principal,
+        text="Digite a quantidade de anos que você deseja estimar\nvisando descobrir a quantidade de horas totais\nde leitura para entretenimento em x anos:"
+    )
+    label_texto.pack(pady=10)
+
+    entrada = ctk.CTkEntry(frame_principal, width=300)
+    entrada.pack(pady=10)
+
+    label_saida = ctk.CTkLabel(frame_principal, text="")
+    label_saida.pack(pady=10)
+
+    botao_confirmar = ctk.CTkButton(
+        frame_principal,
+        text="Confirmar operação",
+        command=lambda: leitura_calculada(entrada, label_saida, horas_entretenimento_semanais),
+        width=150,
+        height=40,
+        corner_radius=10,
+        fg_color="blue",
+        hover_color="darkblue",
+        text_color="white",
+        font=("Arial", 14, "bold"),
+        cursor="hand2"
+    )
+    botao_confirmar.pack(pady=10)
+
+
+def leitura_calculada(entrada, label_saida, horas_entretenimento_semanais):
+    valor_digitado = entrada.get().strip()
+    if not valor_digitado.isdigit():
+        label_saida.configure(text="Por favor, digite um número válido.", text_color="red")
+        return
+    anos = int(valor_digitado)
+    total_horas = anos * 52 * horas_entretenimento_semanais  # 52 semanas por ano
+
+    # Feedback simples
+    if total_horas == 0:
+        mensagem = "Que tal começar a aproveitar mais suas leituras para entretenimento?"
+    elif total_horas < 200:
+        mensagem = f"Você dedicará cerca de {total_horas:.1f} horas para leitura de entretenimento em {anos} anos. Tente aumentar!"
+    elif total_horas < 800:
+        mensagem = f"Legal! Estimativa de {total_horas:.1f} horas de leitura para entretenimento em {anos} anos."
+    else:
+        mensagem = f"Fantástico! Você terá cerca de {total_horas:.1f} horas de leitura para entretenimento em {anos} anos. Aproveite bastante!"
+
+    label_saida.configure(text=mensagem, text_color="green")
+
+
+
+def pesquisar_livro(frame_principal):
+    # Limpa tudo do frame principal
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+
+    # Frame topo com entrada e botão
+    frame_topo = ctk.CTkFrame(frame_principal, fg_color="#ffffff", height=50)
+    frame_topo.pack(fill="x", pady=(0,10))
+
+    entrada_pesquisa = ctk.CTkEntry(frame_topo, placeholder_text="Digite o nome do livro", width=300)
+    entrada_pesquisa.pack(side="left", padx=(10,5), pady=10)
+
+    botao_pesquisar = ctk.CTkButton(frame_topo, text="Pesquisar", width=100,command=lambda:buscar(entrada_pesquisa,label_titulo,label_autoreditora,label_sinopse))
+    botao_pesquisar.pack(side="left", padx=(5,10), pady=10)
+
+    # Frame para mostrar resultados da pesquisa
+    frame_pesquisa = ctk.CTkFrame(frame_principal, fg_color="#ffffff")
+    frame_pesquisa.pack(fill="both", expand=True)
+
+    # Label inicial de instrução (pode remover depois)
+    label_resultado = ctk.CTkLabel(frame_pesquisa, text="FAÇA A PESQUISA BUSCANDO UM LIVRO ESPECÍFICO E NÃO COLEÇÕES",text_color="red")
+    label_resultado.pack(padx=10, pady=10)
+    # Labels que serão apenas atualizados depois da busca
+    label_titulo = ctk.CTkLabel(frame_pesquisa, text="", font=("Arial", 14, "bold"), text_color="black")
+    label_titulo.pack(pady=(10, 2))
+
+    label_autoreditora = ctk.CTkLabel(frame_pesquisa, text="", font=("Arial", 12), text_color="#333333")
+    label_autoreditora.pack(pady=(0, 5))
+
+    label_sinopse = ctk.CTkLabel(frame_pesquisa, text="", font=("Arial", 10), text_color="#5f6368", wraplength=300, justify="left", )
+    label_sinopse.pack(pady=(0, 10))
+
+
+def buscar(entrada_pesquisa,label_titulo,label_autoreditora,label_sinopse):
+        titulo_digitado = entrada_pesquisa.get().strip()
+
+        if titulo_digitado == "":
+            label_titulo.configure(text="Digite algo para pesquisar.", text_color="red")
+            return
+
+        try:
+            url = f"https://www.googleapis.com/books/v1/volumes?q={titulo_digitado}"
+            resposta = requests.get(url)
+            resposta.raise_for_status()
+            dados = resposta.json()
+
+            #items tem que existir pois nosso sistema só procurará livros específicos e não coleções
+            if "items" not in dados or len(dados["items"]) == 0:
+                label_titulo.configure(text="Nenhum resultado encontrado.", text_color="red")
+                label_autoreditora.configure(text="")
+                label_sinopse.configure(text="")
+                return
+
+            info = dados["items"][0]["volumeInfo"]
+            titulo_livro = info.get("title", "Título não disponível")
+            autores = ", ".join(info.get("authors", ["Autor desconhecido"]))
+            editora = info.get("publisher", "Editora desconhecida")
+            sinopse = info.get("description", "Sinopse não disponível")
+
+            # Limita sinopse para não quebrar visual
+            if len(sinopse) > 1000:
+                sinopse = sinopse[:1000] + "..."
+
+            # Atualiza os labels
+            label_titulo.configure(text=titulo_livro, text_color="black")
+            label_autoreditora.configure(text=f"{autores} - {editora}")
+            label_sinopse.configure(text=sinopse)
+
+        except Exception as e:
+            label_titulo.configure(text="Erro ao buscar livro. Verifique a internet.", text_color="red")
+            label_autoreditora.configure(text="")
+            label_sinopse.configure(text="")
+
+    
+        
+
+def projecao_gastos(email, frame_principal):
+
+
+    livros_lidosfisicos=int(dados_livrosfisicos[email])
+    livros_lidosdigitais=int(dados_livrosdigitais[email])
+    
+
+    #CAMPO DE 3 FRAMES
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+    # restante do código aqui
+    label_texto = ctk.CTkLabel(frame_principal, text="Digite a quantidade de anos que você deseja estimar\nvisando descobrir a quantidade total de gasto\ncom cada tipo de livro:")  # Texto vazio para você preencher
+    label_texto.pack(pady=10)
+    label_medias=ctk.CTkLabel(frame_principal, text="Livros físicos - R$50 a média\nLivros digitais - R$20 a média")
+    label_medias.pack(pady=10)
+    entrada = ctk.CTkEntry(frame_principal,width=300)
+    entrada.pack(pady=10)
+    
+    botao_confirmar = ctk.CTkButton(
+    frame_principal,
+    text="Confirmar operação",            # Texto no botão
+    command=lambda:gastos(entrada,label_saida,livros_lidosfisicos,livros_lidosdigitais),          # Função que será executada ao clicar
+    width=150,                     # Largura
+    height=40,                     # Altura
+    corner_radius=10,              # Arredondamento das bordas
+    fg_color="blue",               # Cor de fundo do botão
+    hover_color="darkblue",        # Cor ao passar o mouse
+    text_color="white",            # Cor do texto
+    font=("Arial", 14, "bold"),    # Fonte
+    cursor="hand2"                 # Cursor tipo mão
+    )
+    botao_confirmar.pack(pady=10)
+
+    label_saida = ctk.CTkLabel(frame_principal, text="")  # Você preencherá depois
+    label_saida.pack(pady=10)
+
+def gastos(entrada,label_saida,livros_lidosfisicos,livros_lidosdigitais):
+    valor_digitado = entrada.get().strip()
+    
+    if not valor_digitado.isdigit():
+        label_saida.configure(text="Por favor, digite um número válido.", text_color="red")
+        return
+    anos = int(valor_digitado)
+    estimativa_fisicos = anos * livros_lidosfisicos*50
+    estimativa_digitais=anos*livros_lidosdigitais*20
+    # Feedback simples com base na estimativa
+    if estimativa_fisicos>estimativa_digitais:
+        mensagem=f"Gasto livro físico({estimativa_fisicos}) foi superior ao gasto dos livros digitais ({estimativa_digitais})"
+    elif estimativa_digitais>estimativa_fisicos:
+        mensagem=f"Gasto com livro digital({estimativa_digitais}) foi superiro ao gasto dos livros físicos ({estimativa_fisicos})"
+
+    
+    label_saida.configure(text=mensagem, text_color="green")
+
+    pass
+
+def sobre_nos(frame_principal):
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+
+    texto = (
+        "📚 **Sobre o Projeto BookTrack**\n\n"
+        "O *BookTrack* é um sistema desenvolvido com o objetivo de incentivar o hábito da leitura "
+        "entre pessoas de todas as idades. Através de ferramentas simples e interativas, o projeto busca tornar "
+        "a organização de leituras mais prática, divertida e personalizada.\n\n"
+        "Este projeto foi idealizado e desenvolvido por **Matheus de Castro**, como parte de um exercício prático "
+        "para aplicação de conhecimentos adquiridos na faculdade, especialmente nas áreas de programação, interface "
+        "gráfica com CustomTkinter e manipulação de dados com JSON.\n\n"
+        "💡 Mais do que um sistema de controle, o BookTrack é um convite para transformar páginas em pontes para o conhecimento.\n\n"
+        "*Obrigado por fazer parte dessa jornada!*"
+    )
+
+    label_sobre = ctk.CTkLabel(
+        frame_principal,
+        text=texto,
+        font=("Arial", 14),
+        justify="left",
+        wraplength=300,
+        text_color="#202124"
+    )
+    label_sobre.pack(padx=20, pady=20)
+
     # restante do código aqui
 
-def calculo_estudo():
-    frame_principal.configure(fg_color="#2196F3")  # Azul
+def feedback(email, frame_principal):
+    # Limpa conteúdo anterior
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+
+    # 1. Label de comentário
+    label_comentario = ctk.CTkLabel(frame_principal, text="Digite seu comentário (até 140 caracteres):")
+    label_comentario.pack(pady=(10, 5))
+
+    # 2. Entrada de comentário
+    entrada_comentario = ctk.CTkEntry(frame_principal, width=400)
+    entrada_comentario.pack(pady=(0, 15))
+
+    # 3. Label de nota
+    label_nota = ctk.CTkLabel(frame_principal, text="Dê uma nota para o BookTrack (0 a 10):")
+    label_nota.pack(pady=(10, 5))
+
+    # 4. Combobox com notas
+    combobox_nota = ctk.CTkComboBox(frame_principal, values=[str(i) for i in range(11)], width=100)
+    combobox_nota.pack(pady=(0, 15))
+   
+    botao_confirmar = ctk.CTkButton(
+    frame_principal,
+    text="Confirmar operação",            # Texto no botão
+    command=lambda:confirmar_feedback(entrada_comentario,combobox_nota,label_saida,email),          # Função que será executada ao clicar
+    width=150,                     # Largura
+    height=40,                     # Altura
+    corner_radius=10,              # Arredondamento das bordas
+    fg_color="blue",               # Cor de fundo do botão
+    hover_color="darkblue",        # Cor ao passar o mouse
+    text_color="white",            # Cor do texto
+    font=("Arial", 14, "bold"),    # Fonte
+    cursor="hand2"                 # Cursor tipo mão
+    )
+    botao_confirmar.pack(pady=10)
+
+    label_saida = ctk.CTkLabel(frame_principal, text="")  # Você preencherá depois
+    label_saida.pack(pady=10)
+
+def confirmar_feedback(entrada_comentario,combobox_nota,label_saida,email):
+    valor_entrada=entrada_comentario.get().strip()
+    valor_nota=int(combobox_nota.get())
+    if len(valor_entrada)>140:
+        label_saida.configure(text="Texto grande demais.",text_color="red")
+        return
+    with open("feedback.csv", mode="a", newline="", encoding="utf-8") as arquivo:
+        escritor = csv.writer(arquivo)
+        escritor.writerow([email, valor_entrada, valor_nota])
+        label_saida.configure(text="Feedback enviado.Obrigado!!",text_color="green")
+        return
+
+
+def atualizar_conta(email, frame_principal):
+    #PEDIR CAIXAS DE ENTRADA,VALIDAR AS ENTRADAS PRINCIPAIS E SALVAR
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
     # restante do código aqui
 
-def calculo_leitura():
-    frame_principal.configure(fg_color="#FF9800")  # Laranja
+def deletar_conta(email,frame_principal):
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+
+    # Alerta em vermelho
+    label_alerta = ctk.CTkLabel(
+        frame_principal,
+        text="⚠ ATENÇÃO! Essa ação é irreversível. Só continue se tiver certeza.",
+        text_color="red",
+        font=("Arial", 16, "bold"),
+        wraplength=500,
+        justify="center"
+    )
+    label_alerta.pack(pady=(20, 10))
+
+    # Solicitação de senha
+    label_senha = ctk.CTkLabel(
+        frame_principal,
+        text="Digite sua senha para confirmar a exclusão:",
+        text_color="#202124",
+        font=("Arial", 14)
+    )
+    label_senha.pack(pady=(10, 5))
+
+    entrada_senha = ctk.CTkEntry(
+        frame_principal,
+        show="*",
+        width=300
+    )
+    entrada_senha.pack(pady=(0, 10))
+
+    # Mensagem de erro/sucesso
+    label_saida = ctk.CTkLabel(
+        frame_principal,
+        text="",
+        text_color="red",
+        font=("Arial", 12)
+    )
+    label_saida.pack(pady=(5, 10))
+
+    # Botão deletar
+    botao_deletar = ctk.CTkButton(
+        frame_principal,
+        text="🗑 Deletar Conta",
+        fg_color="red",
+        hover_color="darkred",
+        text_color="white",
+        font=("Arial", 14, "bold"),
+        command=lambda: conta_deletada(email, entrada_senha, label_saida)
+    )
+    botao_deletar.pack(pady=10)
+
     # restante do código aqui
 
-def pesquisar_livro():
-    frame_principal.configure(fg_color="#9C27B0")  # Roxo
-    # restante do código aqui
+def conta_deletada(email, entrada_senha, label_saida):
+    valor_senha=entrada_senha.get().strip()
+    if dados_senha[email] == valor_senha:
+        
+        del dados_idade[email]
+        del dados_senha[email]
+        del dados_livrosdigitais[email]
+        del dados_livrosfisicos[email]
+        del dados_preferencia[email]
+        del dados_estudo[email]
+        del dados_entretenimento[email]
+        del dados_estado[email]
+        del dados_cidade[email]
+        del dados_nome[email]  # importante não esquecer o nome também
 
-def lista_de_desejos():
-    frame_principal.configure(fg_color="#E91E63")  # Rosa
-    # restante do código aqui
+        with open(r"dados_usuarios.json","w", encoding="utf-8") as arquivo_salvo_json:
+            json.dump(arquivo_lido, arquivo_salvo_json, indent=4, ensure_ascii=False)
+            ultimo_tchau()
+            return
+    else:
+        label_saida.configure(text="Senha incorreta",text_color="red")
+        return
 
-def sobre_nos():
-    frame_principal.configure(fg_color="#00BCD4")  # Ciano
-    # restante do código aqui
+    
+def ultimo_tchau():
+    # Criar frame de despedida
+    ultimo = ctk.CTkFrame(janela, fg_color="#ffffff")
+    ultimo.pack(fill="both", expand=True)
 
-def feedback():
-    frame_principal.configure(fg_color="#FFC107")  # Amarelo
-    # restante do código aqui
+    # Mensagem final
+    label_despedida = ctk.CTkLabel(
+        ultimo,
+        text="📕 Conta deletada com sucesso!\nAté outro momento. Continue espalhando histórias por aí.",
+        text_color="red",
+        font=("Arial", 24, "bold"),
+        justify="center",
+        wraplength=600
+    )
+    label_despedida.pack(expand=True)
+    time.sleep(5)
+    sair_sistema()
 
-def atualizar_conta():
-    frame_principal.configure(fg_color="#795548")  # Marrom
-    # restante do código aqui
 
-def deletar_conta():
-    frame_principal.configure(fg_color="#F44336")  # Vermelho
-    # restante do código aqui
 
 
 
@@ -394,13 +920,13 @@ entrada_senha = ctk.CTkEntry(frame_cadastro,width=300,show="*")
 entrada_senha.pack(pady=2)
 
 # 4. Campo Quantidade de Livros fisicos
-label_livrosfisicos = ctk.CTkLabel(frame_cadastro,text="Quantidade de livros fisicos lidos (apenas números):",text_color="#000000",anchor="w",width=300)
+label_livrosfisicos = ctk.CTkLabel(frame_cadastro,text="Quantidade de livros fisicos lidos no último ano:",text_color="#000000",anchor="w",width=300)
 label_livrosfisicos.pack(pady=(2, 0))
 entrada_livrosfisicos = ctk.CTkEntry(frame_cadastro,width=300,validate="key",validatecommand=(janela.register(validar_numeros), "%P"))
 entrada_livrosfisicos.pack(pady=2)
 
 # 5. Campo Quantidade de Livros digitais
-label_livrosdigitais= ctk.CTkLabel(frame_cadastro,text="Quantidade de livros digitais lidos (apenas números):",text_color="#000000",anchor="w",width=300)
+label_livrosdigitais= ctk.CTkLabel(frame_cadastro,text="Quantidade de livros digitais lidos no último ano:",text_color="#000000",anchor="w",width=300)
 label_livrosdigitais.pack(pady=(2, 0))
 entrada_livrosdigitais = ctk.CTkEntry(frame_cadastro,width=300,validate="key",validatecommand=(janela.register(validar_numeros), "%P"))
 entrada_livrosdigitais .pack(pady=2)
@@ -590,71 +1116,7 @@ class Cadastro:
 
 
 
-#frame menu
-frame_menu = ctk.CTkFrame(janela, fg_color="#ffffff")
-#frame_menu.pack(fill="y", side="left")  # Posiciona o menu lateral na janela
 
-frame_topo = ctk.CTkFrame(frame_menu, fg_color="#1A73E8", height=80)
-frame_topo.pack(fill="x")
-
-titulo = ctk.CTkLabel(frame_topo, text="BookTrack", fg_color="#1A73E8", text_color="white", font=("Arial", 24, "bold"))
-titulo.pack(pady=20)
-####################################################################
-
-# Menu lateral dentro do conteúdo
-frame_lateral = ctk.CTkFrame(frame_menu, fg_color="white", width=200)
-frame_lateral.pack(side="left", fill="y")
-
-# Botões do menu (sem bd e relief, padx no pack)
-botao1 = ctk.CTkButton(frame_lateral, text="📘 Estimativa", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=ver_estimativa, cursor="hand2")
-botao1.pack(fill="x", pady=(20, 10), padx=20)
-
-botao2 = ctk.CTkButton(frame_lateral, text="🚀 Cálculo estudo", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=calculo_estudo, cursor="hand2")
-botao2.pack(fill="x", pady=10, padx=20)
-
-botao3 = ctk.CTkButton(frame_lateral, text="📄 Cálculo leitura", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=calculo_leitura, cursor="hand2")
-botao3.pack(fill="x", pady=10, padx=20)
-
-botao4 = ctk.CTkButton(frame_lateral, text="📚 Pesquisar livro", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=pesquisar_livro, cursor="hand2")
-botao4.pack(fill="x", pady=10, padx=20)
-
-botao5 = ctk.CTkButton(frame_lateral, text="🎁 Lista de desejos", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=lista_de_desejos, cursor="hand2")
-botao5.pack(fill="x", pady=10, padx=20)
-
-botao6 = ctk.CTkButton(frame_lateral, text="❤ Sobre nós", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=sobre_nos, cursor="hand2")
-botao6.pack(fill="x", pady=10, padx=20)
-
-botao7 = ctk.CTkButton(frame_lateral, text="✍️ Feedback", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=feedback, cursor="hand2")
-botao7.pack(fill="x", pady=10, padx=20)
-
-botao8 = ctk.CTkButton(frame_lateral, text="✔ Atualizar conta", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=atualizar_conta, cursor="hand2")
-botao8.pack(fill="x", pady=10, padx=20)
-
-botao9 = ctk.CTkButton(frame_lateral, text="🗑 Deletar conta", fg_color="white", text_color="#1A73E8", 
-                       font=("Arial", 12), anchor="w", command=deletar_conta, cursor="hand2")
-botao9.pack(fill="x", pady=10, padx=20)
-
-# Área principal de conteúdo
-#Criação do frame conteúdo para fixar o frame principal
-frame_conteudo = ctk.CTkFrame(frame_menu, fg_color="#f0f2f5")
-frame_conteudo.pack(fill="both", expand=True)
-
-frame_principal = ctk.CTkFrame(frame_conteudo, fg_color="#ffffff")
-frame_principal.pack(fill="both", expand=True)
-
-texto_bem_vindo = ctk.CTkLabel(frame_principal, text="Bem-vindo ao BookTrack", fg_color="#ffffff", text_color="#202124", font=("Arial", 18, "bold"))
-texto_bem_vindo.pack(pady=(0, 20))
-
-texto_instrucao = ctk.CTkLabel(frame_principal, text=random.choice(mensagens_leitura), fg_color="#ffffff", text_color="#5f6368", wraplength=500, justify="left", font=("Arial", 12))
-texto_instrucao.pack()
 
 
 ############################
