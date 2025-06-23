@@ -259,6 +259,26 @@ def atualizar_cidades(event=None):
         #
         combobox_cidade.set("Selecione a cidade")
 
+
+
+def atualizar_cidades_atualizacao(event, combobox_estado, combobox_cidade, label_aviso):
+    sigla = estados_siglas.get(combobox_estado.get(), None)
+    if sigla:
+        combobox_cidade.set("Carregando...")
+        janela.update()
+        cidades = obter_cidades(sigla)
+        if cidades:
+            combobox_cidade.configure(values=cidades)
+            combobox_cidade.set("Selecione a cidade")
+            label_aviso.configure(text="")  # limpa avisos
+        else:
+            label_aviso.configure(text="Erro ao carregar cidades. Verifique sua conexão.", text_color="red")
+            combobox_cidade.configure(values=[])
+            combobox_cidade.set("Erro ao carregar cidades")
+    else:
+        label_aviso.configure(text="Estado inválido ou não selecionado.", text_color="red")
+
+
 def validar_numeros(novo_texto):  # Adicione o parâmetro
     return novo_texto.isdigit() or novo_texto == ""
 
@@ -662,10 +682,265 @@ def confirmar_feedback(entrada_comentario,combobox_nota,label_saida,email):
 
 
 def atualizar_conta(email, frame_principal):
-    #PEDIR CAIXAS DE ENTRADA,VALIDAR AS ENTRADAS PRINCIPAIS E SALVAR
     for widget in frame_principal.winfo_children():
         widget.destroy()
-    # restante do código aqui
+
+    label_titulo = ctk.CTkLabel(frame_principal, text="Atualize seus dados:", text_color="blue", font=("Arial", 14, "bold"))
+    label_titulo.pack(pady=1)
+
+    label_aviso = ctk.CTkLabel(frame_principal, text="", text_color="blue", font=("Arial", 12))
+    label_aviso.pack(pady=1)
+
+    # 1 - Nome
+    label_nome = ctk.CTkLabel(frame_principal, text="Nome Completo:", text_color="#000000", anchor="w", width=200, font=("Arial", 10))
+    label_nome.pack(pady=(1, 0))
+    entrada_nome = ctk.CTkEntry(frame_principal, width=200, validate="key", validatecommand=(janela.register(validar_letras_espacos), "%P"))
+    entrada_nome.pack(pady=1)
+
+    label_email = ctk.CTkLabel(frame_principal, text="Digite seu melhor email:",text_color="#000000",anchor="w",width=200)
+    label_email.pack(pady=(1, 0))
+    entrada_email = ctk.CTkEntry(frame_principal,width=200)
+    entrada_email.pack(pady=1)
+
+
+
+    # 2 - Idade
+    label_idade = ctk.CTkLabel(frame_principal, text="Idade:", text_color="#000000", anchor="w", width=200, font=("Arial", 10))
+    label_idade.pack(pady=(1, 0))
+    entrada_idade = ctk.CTkEntry(frame_principal, width=200, validate="key", validatecommand=(janela.register(validar_numeros), "%P"))
+    entrada_idade.pack(pady=1)
+
+    # 3 - Senha
+    label_senha = ctk.CTkLabel(frame_principal, text="Nova senha:", text_color="#000000", anchor="w", width=200, font=("Arial", 10))
+    label_senha.pack(pady=(1, 0))
+    entrada_senha = ctk.CTkEntry(frame_principal, width=200, show="*")
+    entrada_senha.pack(pady=1)
+
+    # 4 - Livros físicos
+    label_livrosfisicos = ctk.CTkLabel(frame_principal, text="Livros físicos lidos (último ano):", text_color="#000000", anchor="w", width=200, font=("Arial", 10))
+    label_livrosfisicos.pack(pady=(1, 0))
+    entrada_livrosfisicos = ctk.CTkEntry(frame_principal, width=200, validate="key", validatecommand=(janela.register(validar_numeros), "%P"))
+    entrada_livrosfisicos.pack(pady=1)
+
+    # 5 - Livros digitais
+    label_livrosdigitais = ctk.CTkLabel(frame_principal, text="Livros digitais lidos (último ano):", text_color="#000000", anchor="w", width=200, font=("Arial", 10))
+    label_livrosdigitais.pack(pady=(1, 0))
+    entrada_livrosdigitais = ctk.CTkEntry(frame_principal, width=200, validate="key", validatecommand=(janela.register(validar_numeros), "%P"))
+    entrada_livrosdigitais.pack(pady=1)
+
+    # 6 - Horas de estudo semanais
+    label_estudo = ctk.CTkLabel(frame_principal, text="Horas de estudo (semana):", text_color="#000000", anchor="w", width=200, font=("Arial", 10))
+    label_estudo.pack(pady=(1, 0))
+    entrada_estudo = ctk.CTkEntry(frame_principal, width=200, validate="key", validatecommand=(janela.register(validar_numeros), "%P"))
+    entrada_estudo.pack(pady=1)
+
+    # 7 - Horas de leitura de entretenimento semanais
+    label_entretenimento = ctk.CTkLabel(frame_principal, text="Horas de entretenimento (semana):", text_color="#000000", anchor="w", width=200, font=("Arial", 10))
+    label_entretenimento.pack(pady=(1, 0))
+    entrada_entretenimento = ctk.CTkEntry(frame_principal, width=200, validate="key", validatecommand=(janela.register(validar_numeros), "%P"))
+    entrada_entretenimento.pack(pady=1)
+
+    # 8 - Preferência de leitura
+    
+    combobox_preferencia = ttk.Combobox(frame_principal, values=["Digital(kindle)", "Livro físico"], state="readonly", width=28)
+    combobox_preferencia.set("Selecione sua preferência")
+    combobox_preferencia.pack(pady=1)
+
+    # 9 - Estado
+    combobox_estado = ttk.Combobox(frame_principal, values=list(estados_siglas.keys()), state="readonly", width=28)
+    combobox_estado.set("Selecione o estado")
+    combobox_estado.pack(pady=1)
+    #combobox_estado.bind("<<ComboboxSelected>>", atualizar_cidades_atualizacao)
+    combobox_estado.bind("<<ComboboxSelected>>", lambda event: atualizar_cidades_atualizacao(event, combobox_estado, combobox_cidade, label_aviso))
+
+
+    # 10 - Cidade
+    combobox_cidade = ttk.Combobox(frame_principal, values=[""], state="readonly", width=28)
+    combobox_cidade.set("Primeiro selecione o estado")
+    combobox_cidade.pack(pady=1)
+
+    # Botão de atualização
+    botao_atualizar = ctk.CTkButton(frame_principal, text="Atualizar", fg_color="blue", text_color="white", width=200, height=30, font=("Arial", 11),
+                                     command=lambda: verificar_espacos(email,frame_principal,label_aviso,entrada_email,entrada_nome,entrada_idade,entrada_senha,entrada_livrosfisicos,entrada_livrosdigitais,
+                                                                    entrada_estudo,entrada_entretenimento,
+                                                                    combobox_preferencia,combobox_estado,combobox_cidade))
+    botao_atualizar.pack(pady=2)
+
+
+def verificar_espacos(email,label_aviso,frame_principal,entrada_email,entrada_nome,entrada_idade,entrada_senha,entrada_livrosfisicos,entrada_livrosdigitais,
+                               entrada_estudo,entrada_entretenimento,
+                               combobox_preferencia,combobox_estado,combobox_cidade):
+    email_antigo=email
+    email_novo=entrada_email.get().strip()
+    nome = entrada_nome.get().strip()
+    idade = entrada_idade.get().strip()
+    senha = entrada_senha.get().strip()
+    livros_fisicos = entrada_livrosfisicos.get().strip()
+    livros_digitais = entrada_livrosdigitais.get().strip()
+    horas_estudo = entrada_estudo.get().strip()
+    horas_entretenimento = entrada_entretenimento.get().strip()
+    preferencia = combobox_preferencia.get()
+    estado = combobox_estado.get()
+    cidade = combobox_cidade.get()
+    print(estado)
+    print(cidade)
+
+    entradas = [
+        nome, idade, senha,email_novo,
+        livros_fisicos, livros_digitais,
+        horas_estudo, horas_entretenimento
+    ]
+
+    if any(campo == "" for campo in entradas):
+        label_aviso.configure(text="Campos não preenchidos ainda.", text_color="red")
+        return
+
+    if preferencia == "Selecione sua preferência de leitura":
+        label_aviso.configure(text="Selecione sua preferência de leitura.", text_color="red")
+        return
+
+    if estado == "Selecione o estado":
+        label_aviso.configure(text="Selecione o estado.", text_color="red")
+        return
+
+    if cidade == "Primeiro selecione o estado" or not cidade:
+        label_aviso.configure(text="Selecione a cidade.", text_color="red")
+        return
+
+    verificar_atualizacaosenha(email_antigo, label_aviso,frame_principal,
+                              email_novo, nome, idade, senha,
+                              livros_fisicos, livros_digitais,
+                              horas_estudo, horas_entretenimento,
+                              preferencia, estado, cidade)
+    # Aqui viria o salvamento dos dados, se desejado
+
+import json
+import re
+
+def verificar_atualizacaosenha(email_antigo, label_aviso,frame_principal,
+                              email_novo, nome, idade, senha,
+                              livros_fisicos, livros_digitais,
+                              horas_estudo, horas_entretenimento,
+                              preferencia, estado, cidade):
+    senha = senha.strip()
+    if 4 <= len(senha) <= 20:
+        # Senha válida, prossiga para validar email
+        verifica_atualizacaoemailvalido(email_antigo, label_aviso,frame_principal,
+                                       email_novo, nome, idade, senha,
+                                       livros_fisicos, livros_digitais,
+                                       horas_estudo, horas_entretenimento,
+                                       preferencia, estado, cidade)
+        return
+    else:
+        label_aviso.configure(text="Tamanho da senha inválido (4 a 20 caracteres).", text_color="red")
+        return
+
+def verifica_atualizacaoemailvalido(email_antigo, label_aviso,frame_principal,
+                                   email_novo, nome, idade, senha,
+                                   livros_fisicos, livros_digitais,
+                                   horas_estudo, horas_entretenimento,
+                                   preferencia, estado, cidade):
+    dominios_validos = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com']  # coloque seus domínios
+
+    # Verificação 1: Formato básico do email
+    if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email_novo):
+        label_aviso.configure(text="Formato de email inválido.", text_color="red")
+        return
+
+    # Verificação 2: Domínio válido
+    dominio = email_novo.split('@')[-1].lower()
+    if dominio not in dominios_validos:
+        label_aviso.configure(text="Domínio do email não aceito.", text_color="red")
+        return
+
+    # Email válido, prossiga para verificar se já está cadastrado
+    verificar_atualizacaoemailcadastrado(email_antigo, label_aviso,frame_principal,
+                                        email_novo, nome, idade, senha,
+                                        livros_fisicos, livros_digitais,
+                                        horas_estudo, horas_entretenimento,
+                                        preferencia, estado, cidade)
+
+
+def verificar_atualizacaoemailcadastrado(email_antigo, label_aviso,frame_principal,
+                                        email_novo, nome, idade, senha,
+                                        livros_fisicos, livros_digitais,
+                                        horas_estudo, horas_entretenimento,
+                                        preferencia, estado, cidade):
+    with open("dados_usuarios.json", "r", encoding="utf-8") as arquivo:
+        arquivo_lido = json.load(arquivo)
+        dados_nome = arquivo_lido.get("nome", {})
+
+        # Se o email novo for diferente do antigo, verificar se já existe cadastrado
+        if email_novo != email_antigo and email_novo in dados_nome:
+            label_aviso.configure(text="Email já cadastrado por outro usuário.", text_color="red")
+            return
+
+    # Se passou por todas as validações, prossiga para salvar os dados
+    salvar_dados_atualizacao(email_antigo, label_aviso,frame_principal,
+                            email_novo, nome, idade, senha,
+                            livros_fisicos, livros_digitais,
+                            horas_estudo, horas_entretenimento,
+                            preferencia, estado, cidade)
+
+def salvar_dados_atualizacao(email_antigo, label_aviso,frame_principal,
+                            email_novo, nome, idade, senha,
+                            livros_fisicos, livros_digitais,
+                            horas_estudo, horas_entretenimento,
+                            preferencia, estado, cidade):
+    with open("dados_usuarios.json", "r", encoding="utf-8") as arquivo:
+        dados = json.load(arquivo)
+
+    # Remove dados antigos e atualiza com novos
+    dados["nome"].pop(email_antigo, None)
+    dados["nome"][email_novo] = nome
+
+    dados["idade"].pop(email_antigo, None)
+    dados["idade"][email_novo] = idade
+
+    dados["senha"].pop(email_antigo, None)
+    dados["senha"][email_novo] = senha
+
+    dados["livros_fisicos"].pop(email_antigo, None)
+    dados["livros_fisicos"][email_novo] = livros_fisicos
+
+    dados["livros_digitais"].pop(email_antigo, None)
+    dados["livros_digitais"][email_novo] = livros_digitais
+
+    dados["horas_estudo"].pop(email_antigo, None)
+    dados["horas_estudo"][email_novo] = horas_estudo
+
+    dados["horas_entretenimento"].pop(email_antigo, None)
+    dados["horas_entretenimento"][email_novo] = horas_entretenimento
+
+    dados["preferencia"].pop(email_antigo, None)
+    dados["preferencia"][email_novo] = preferencia
+
+    dados["estado"].pop(email_antigo, None)
+    dados["estado"][email_novo] = estado
+
+    dados["cidade"].pop(email_antigo, None)
+    dados["cidade"][email_novo] = cidade
+
+    with open("dados_usuarios.json", "w", encoding="utf-8") as arquivo:
+        json.dump(dados, arquivo, ensure_ascii=False, indent=4)
+    for widget in frame_principal.winfo_children():
+        widget.destroy()
+
+# Criar nova mensagem após limpar os widgets
+    label_sucesso = ctk.CTkLabel(
+        frame_principal,
+        text="✅ Dados atualizados com sucesso!",
+        text_color="green",
+        font=("Arial", 14, "bold")
+    )
+    label_sucesso.pack(pady=10)
+
+
+    
+
+
+
+
 
 def deletar_conta(email,frame_principal):
     for widget in frame_principal.winfo_children():
@@ -738,31 +1013,14 @@ def conta_deletada(email, entrada_senha, label_saida,frame_principal):
 
         with open(r"dados_usuarios.json","w", encoding="utf-8") as arquivo_salvo_json:
             json.dump(arquivo_lido, arquivo_salvo_json, indent=4, ensure_ascii=False)
-            ultimo_tchau(frame_principal)
+            label_saida.configure(text="Conta deletada",text_color="red")
+            sair_sistema()
             return
     else:
         label_saida.configure(text="Senha incorreta",text_color="red")
         return
 
     
-def ultimo_tchau(frame_principal):
-    # Criar frame de despedida
-    frame_principal.pack_forget()
-    ultimo = ctk.CTkFrame(janela, fg_color="#ffffff")
-    ultimo.pack(fill="both", expand=True)
-
-    # Mensagem final
-    label_despedida = ctk.CTkLabel(
-        ultimo,
-        text="📕 Conta deletada com sucesso!\nAté outro momento. Continue espalhando histórias por aí.",
-        text_color="red",
-        font=("Arial", 24, "bold"),
-        justify="center",
-        wraplength=600
-    )
-    label_despedida.pack(expand=True)
-    time.sleep(5)
-    sair_sistema()
 
 
 
