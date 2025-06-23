@@ -715,13 +715,13 @@ def deletar_conta(email,frame_principal):
         hover_color="darkred",
         text_color="white",
         font=("Arial", 14, "bold"),
-        command=lambda: conta_deletada(email, entrada_senha, label_saida)
+        command=lambda: conta_deletada(email, entrada_senha, label_saida,frame_principal)
     )
     botao_deletar.pack(pady=10)
 
     # restante do código aqui
 
-def conta_deletada(email, entrada_senha, label_saida):
+def conta_deletada(email, entrada_senha, label_saida,frame_principal):
     valor_senha=entrada_senha.get().strip()
     if dados_senha[email] == valor_senha:
         
@@ -738,15 +738,16 @@ def conta_deletada(email, entrada_senha, label_saida):
 
         with open(r"dados_usuarios.json","w", encoding="utf-8") as arquivo_salvo_json:
             json.dump(arquivo_lido, arquivo_salvo_json, indent=4, ensure_ascii=False)
-            ultimo_tchau()
+            ultimo_tchau(frame_principal)
             return
     else:
         label_saida.configure(text="Senha incorreta",text_color="red")
         return
 
     
-def ultimo_tchau():
+def ultimo_tchau(frame_principal):
     # Criar frame de despedida
+    frame_principal.pack_forget()
     ultimo = ctk.CTkFrame(janela, fg_color="#ffffff")
     ultimo.pack(fill="both", expand=True)
 
@@ -765,6 +766,8 @@ def ultimo_tchau():
 
 
 
+
+#resolver último tchau e atualizar conta
 
 
 ################################################################################################
