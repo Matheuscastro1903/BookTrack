@@ -6,6 +6,8 @@ import json
 import re
 import csv
 import time
+
+""""Essa lista é usada para printar mensagens aleatórias toda vez que o usuário entra no sistema """
 mensagens_leitura = [
     "📚 'Um livro é um sonho que você segura nas mãos.' Neil Gaiman",
     "🧠 'A leitura é para a mente o que o exercício é para o corpo.'  Joseph Addison",
@@ -46,12 +48,15 @@ with open(r"dados_usuarios.json", "r", encoding="utf-8") as arquivo:
 
  
 def mostrar_login():
+    """Essa função é utilizada par mostrar o frame menu quando o usuário apertar o botão mostrar menu """
     frame_topoinicial.pack_forget()
     tela_inicial.pack_forget()
     frame_aviso.pack_forget()
     frame_login.pack(fill="both",expand=True)
 
 def conferir_logar():
+    """Função utilizada para conferir se todos as entradas estão sendo preenchidas na parte do menu,para evitar que 
+     dados vazios sejam tratados """
     global entrada_emaillogin, entrada_senhalogin, label_avisologin
     email = entrada_emaillogin.get().strip()
     senha = entrada_senhalogin.get().strip()
@@ -70,6 +75,8 @@ def conferir_logar():
     logar(email,senha)
 
 def logar(email,senha):
+    """Função utilizada para conferir se o email e login batem com o do banco de dados """
+
     global nome_usuario
     try:
         with open("dados_usuarios.json", "r", encoding="utf-8") as arquivo:
@@ -98,6 +105,7 @@ def logar(email,senha):
     
 
 def voltar_inicial():
+    """Essa função é utilizada para o usuário voltar para a tela inical sempre apertar o botão"""
     frame_login.pack_forget()
     frame_cadastro.pack_forget()
     frame_topoinicial.pack(fill="x")
@@ -105,12 +113,14 @@ def voltar_inicial():
 
 
 def mostrar_cadastro():
+    """ Função utilizada para mostra o frame do cadastro"""
     frame_topoinicial.pack_forget()
     tela_inicial.pack_forget()
 
     frame_cadastro.pack(fill="both",expand=True)
     
 def cadastrar_conta():
+    """Essa função será utilizada para verificar se as entradas estão preenchidas e chamará a classe cadastro para cadastrar a conta """
     
     nome = entrada_nome.get()
     idade = entrada_idade.get()
@@ -153,6 +163,8 @@ def cadastrar_conta():
 # Define a função principal de cadastro de conta
 
 def mostrar_menu(email,nome_usuario):
+    """Função utilizada para mostra o menu após o usuário conseguir fazer o login.Aqui terá botões que serão utilizados para puxar o restante 
+     das funções.O frame_principal não irá desaparecer,apenas irá atualizar de forma dinâmica a cada interação do usuário """
     frame_login.pack_forget()
     #frame menu
     frame_menu = ctk.CTkFrame(janela, fg_color="#ffffff")
@@ -237,6 +249,7 @@ def mostrar_menu(email,nome_usuario):
 
 
 def obter_cidades(sigla_estado):
+    """ Função utilizada para obter as cidades em relação ao estado escolhido pelo usuário"""
     try:
         url = f"https://servicodados.ibge.gov.br/api/v1/localidades/estados/{sigla_estado}/municipios"
         resposta = requests.get(url)
@@ -248,6 +261,7 @@ def obter_cidades(sigla_estado):
 
 # Função chamada quando um estado é selecionado
 def atualizar_cidades(event=None):
+    """ Função utilizada para atualizar a combobox das cidades"""
     sigla = estados_siglas.get(combobox_estado.get(), None)
     if sigla:
         combobox_cidade.set("Carregando...")
@@ -262,6 +276,7 @@ def atualizar_cidades(event=None):
 
 
 def atualizar_cidades_atualizacao(event, combobox_estado, combobox_cidade, label_aviso):
+    """ faz a mesma função da atualizar_cidades,mas essa fuinção é voltada para a atualização de dados"""
     sigla = estados_siglas.get(combobox_estado.get(), None)
     if sigla:
         combobox_cidade.set("Carregando...")
@@ -279,10 +294,13 @@ def atualizar_cidades_atualizacao(event, combobox_estado, combobox_cidade, label
         label_aviso.configure(text="Estado inválido ou não selecionado.", text_color="red")
 
 
-def validar_numeros(novo_texto):  # Adicione o parâmetro
-    return novo_texto.isdigit() or novo_texto == ""
+def validar_numeros(novo_texto):  
+    """ Função utilizada para  permitir que o usuário digite apenas números,facilitando o tratamento de dados"""
 
-def validar_letras_espacos(novo_texto):  # Adicione o parâmetro
+    return novo_texto.isdigit() or novo_texto == ""
+""""""
+def validar_letras_espacos(novo_texto):
+    """ Função utilizada para  permitir que o usuário digite apenas letras e espaços,facilitando o tratamento de dados"""  
     return all(c.isalpha() or c.isspace() for c in novo_texto) or novo_texto == ""
 
 
@@ -290,19 +308,22 @@ def validar_letras_espacos(novo_texto):  # Adicione o parâmetro
 
 
 def aviso_sistema():
+    """Função utilizada para mostrar o frame_aviso,que só aparecerá se o cadastro for concluído com sucesso"""
     frame_cadastro.pack_forget()
     frame_aviso.pack(fill="both",expand=True)
   
     
-    # Cria o frame_aviso se não existir
+    
     
     
 
 def sair_sistema():
+    """Função utilizada para fechar sistema """
     janela.destroy()  # Fecha a janela principal
     # Ou qualquer outra lógica de saída que você preferir
 
 def ver_estimativa(email, frame_principal):
+    """Função utilizada para mostrar o frame_principal atualizado para ver estimativa e recolher os dados necessários"""
     livros_lidosfisicos=int(dados_livrosfisicos[email])
     livros_lidosdigitais=int(dados_livrosdigitais[email])
     soma_livros=livros_lidosdigitais+livros_lidosfisicos
@@ -335,6 +356,8 @@ def ver_estimativa(email, frame_principal):
     
 
 def calcular_estimativa(entrada,label_saida,soma_livros):
+    """ Função utilizada para calcular estimativa de livros lidos em x anos"""
+    
     valor_digitado = entrada.get().strip()
     if not valor_digitado.isdigit():
         label_saida.configure(text="Por favor, digite um número válido.", text_color="red")
@@ -357,6 +380,7 @@ def calcular_estimativa(entrada,label_saida,soma_livros):
     pass
 
 def calculo_estudo(email, frame_principal):
+    """Função utilizada para mostrar o frame_principal atualizado para calculo leitura por estudo  e recolher os dados necessários"""
     # Pegando as horas de estudo semanais do usuário no JSON
     horas_estudo_semanais = float(dados_estudo[email])
 
@@ -392,6 +416,7 @@ def calculo_estudo(email, frame_principal):
 
 
 def calcular_estudo(entrada, label_saida, horas_estudo_semanais):
+    """Função utilizada para calcular estudo anual em relação a quantidade de horas semanais"""
     valor_digitado = entrada.get().strip()
     if not valor_digitado.isdigit():
         label_saida.configure(text="Por favor, digite um número válido.", text_color="red")
@@ -413,6 +438,7 @@ def calcular_estudo(entrada, label_saida, horas_estudo_semanais):
 
 
 def calculo_leitura(email, frame_principal):
+    """Função utilizada para mostrar o frame_principal atualizado para calculo leitura por entretenimento  e recolher os dados necessários"""
     # Pegando as horas de entretenimento semanais do usuário no JSON
     horas_entretenimento_semanais = float(dados_entretenimento[email])
 
@@ -448,6 +474,7 @@ def calculo_leitura(email, frame_principal):
 
 
 def leitura_calculada(entrada, label_saida, horas_entretenimento_semanais):
+    """Função utilizada para calcular leitura por entretenimento anual em relação a quantidade de horas semanais"""
     valor_digitado = entrada.get().strip()
     if not valor_digitado.isdigit():
         label_saida.configure(text="Por favor, digite um número válido.", text_color="red")
@@ -470,7 +497,8 @@ def leitura_calculada(entrada, label_saida, horas_entretenimento_semanais):
 
 
 def pesquisar_livro(frame_principal):
-    # Limpa tudo do frame principal
+    """Função utilizada para mostrar o frame_principal atualizado para pesquisar livros e recolher os dados necessários"""
+    
     for widget in frame_principal.winfo_children():
         widget.destroy()
 
@@ -503,6 +531,7 @@ def pesquisar_livro(frame_principal):
 
 
 def buscar(entrada_pesquisa,label_titulo,label_autoreditora,label_sinopse):
+        """Função utilizada para buscar o livro pesquisado,utilizando a API do google books """
         titulo_digitado = entrada_pesquisa.get().strip()
 
         if titulo_digitado == "":
@@ -546,6 +575,7 @@ def buscar(entrada_pesquisa,label_titulo,label_autoreditora,label_sinopse):
         
 
 def projecao_gastos(email, frame_principal):
+    """Função utilizada para mostrar o frame_principal atualizado para projeção de gastos e recolher os dados necessários"""
 
 
     livros_lidosfisicos=int(dados_livrosfisicos[email])
@@ -582,6 +612,7 @@ def projecao_gastos(email, frame_principal):
     label_saida.pack(pady=10)
 
 def gastos(entrada,label_saida,livros_lidosfisicos,livros_lidosdigitais):
+    """Função utlizada para mostrar os gastos estimados com a compra de livros físicos e digitais em x anos """
     valor_digitado = entrada.get().strip()
     
     if not valor_digitado.isdigit():
@@ -602,6 +633,7 @@ def gastos(entrada,label_saida,livros_lidosfisicos,livros_lidosdigitais):
     pass
 
 def sobre_nos(frame_principal):
+    """Função utilizada para mostrar o frame_principal atualizado para mostrar um texto a respeito da criação do BookTrack"""
     for widget in frame_principal.winfo_children():
         widget.destroy()
 
@@ -630,6 +662,7 @@ def sobre_nos(frame_principal):
     # restante do código aqui
 
 def feedback(email, frame_principal):
+    """Função utilizada para mostrar o frame_principal atualizado para ver estimativa e recolher os dados necessários"""
     # Limpa conteúdo anterior
     for widget in frame_principal.winfo_children():
         widget.destroy()
@@ -669,6 +702,7 @@ def feedback(email, frame_principal):
     label_saida.pack(pady=10)
 
 def confirmar_feedback(entrada_comentario,combobox_nota,label_saida,email):
+    """Função utilizada para enviar e salvar feedback no arquivo csv """
     valor_entrada=entrada_comentario.get().strip()
     valor_nota=int(combobox_nota.get())
     if len(valor_entrada)>140:
@@ -682,6 +716,7 @@ def confirmar_feedback(entrada_comentario,combobox_nota,label_saida,email):
 
 
 def atualizar_conta(email, frame_principal):
+    """Função utilizada para mostrar o frame_principal atualizado para atualização e recolher os dados necessários"""
     for widget in frame_principal.winfo_children():
         widget.destroy()
 
@@ -770,6 +805,7 @@ def atualizar_conta(email, frame_principal):
 def verificar_espacos(email,label_aviso,frame_principal,entrada_email,entrada_nome,entrada_idade,entrada_senha,entrada_livrosfisicos,entrada_livrosdigitais,
                                entrada_estudo,entrada_entretenimento,
                                combobox_preferencia,combobox_estado,combobox_cidade):
+    """Função utilizada para verificar se há espaços em branco ou não """
     email_antigo=email
     email_novo=entrada_email.get().strip()
     nome = entrada_nome.get().strip()
@@ -822,6 +858,7 @@ def verificar_atualizacaosenha(email_antigo, label_aviso,frame_principal,
                               livros_fisicos, livros_digitais,
                               horas_estudo, horas_entretenimento,
                               preferencia, estado, cidade):
+    """Função utilizada para verificar se a senha tem o tamanho adequado """
     senha = senha.strip()
     if 4 <= len(senha) <= 20:
         # Senha válida, prossiga para validar email
@@ -840,7 +877,9 @@ def verifica_atualizacaoemailvalido(email_antigo, label_aviso,frame_principal,
                                    livros_fisicos, livros_digitais,
                                    horas_estudo, horas_entretenimento,
                                    preferencia, estado, cidade):
-    dominios_validos = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com']  # coloque seus domínios
+    """Função utilizada para verificar se o email é válido ou não """
+    
+    dominios_validos = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com']  
 
     # Verificação 1: Formato básico do email
     if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email_novo):
@@ -866,6 +905,7 @@ def verificar_atualizacaoemailcadastrado(email_antigo, label_aviso,frame_princip
                                         livros_fisicos, livros_digitais,
                                         horas_estudo, horas_entretenimento,
                                         preferencia, estado, cidade):
+    """Função utilizada para verificar se o email que será atualizado já está cadastrado ou não"""
     with open("dados_usuarios.json", "r", encoding="utf-8") as arquivo:
         arquivo_lido = json.load(arquivo)
         dados_nome = arquivo_lido.get("nome", {})
@@ -887,6 +927,7 @@ def salvar_dados_atualizacao(email_antigo, label_aviso,frame_principal,
                             livros_fisicos, livros_digitais,
                             horas_estudo, horas_entretenimento,
                             preferencia, estado, cidade):
+    """Função utilizada para salvar os dados de forma correta """
     with open("dados_usuarios.json", "r", encoding="utf-8") as arquivo:
         dados = json.load(arquivo)
 
@@ -943,6 +984,7 @@ def salvar_dados_atualizacao(email_antigo, label_aviso,frame_principal,
 
 
 def deletar_conta(email,frame_principal):
+    """Função utilizada para mostrar o frame_principal atualizado para deletar conta """
     for widget in frame_principal.winfo_children():
         widget.destroy()
 
@@ -997,6 +1039,7 @@ def deletar_conta(email,frame_principal):
     # restante do código aqui
 
 def conta_deletada(email, entrada_senha, label_saida,frame_principal):
+    """Função utilizada para apagar a conta e fechar o sistema em 3 segundos"""
     valor_senha=entrada_senha.get().strip()
     if dados_senha[email] == valor_senha:
         
@@ -1014,6 +1057,7 @@ def conta_deletada(email, entrada_senha, label_saida,frame_principal):
         with open(r"dados_usuarios.json","w", encoding="utf-8") as arquivo_salvo_json:
             json.dump(arquivo_lido, arquivo_salvo_json, indent=4, ensure_ascii=False)
             label_saida.configure(text="Conta deletada",text_color="red")
+            time.sleep(3)
             sair_sistema()
             return
     else:
@@ -1030,7 +1074,7 @@ def conta_deletada(email, entrada_senha, label_saida,frame_principal):
 
 ################################################################################################
 ctk.set_appearance_mode("light")  # ou "light"
-
+""" Criação da janela principal"""
 janela = ctk.CTk()
 janela.title("BookTrack")
 janela.geometry("650x750+400+150")
@@ -1038,6 +1082,7 @@ janela.resizable(False, False)
 
 
 #frame topo tela inical
+
 frame_topoinicial=ctk.CTkFrame(janela,fg_color="Blue",height=80)
 label_topoinicial=ctk.CTkLabel(frame_topoinicial,text="BookTrack",fg_color="Blue",text_color="white",font=("Arial", 18))
 label_topoinicial.pack(pady=30)
@@ -1239,7 +1284,7 @@ botao_voltarinicial.pack()
 
 
 
-## Frame aviso (criação básica sem pack)
+## Frame aviso (usado para avisar que o login foi feito com sucesso,dando a opção de sair do sistema ou ir para menu)
 frame_aviso=ctk.CTkFrame(janela,fg_color="#ffffff")
  # Label de aviso
 label = ctk.CTkLabel(frame_aviso, text="Cadastro realizado com sucesso!", font=("Arial", 20), text_color="green")
