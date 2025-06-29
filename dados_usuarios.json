@@ -1,6 +1,5 @@
 {
     "nome": {
-        "joao.silva@email.com": "João Silva",
         "maria.souza@email.com": "Maria Souza",
         "carlos.pereira@email.com": "Carlos Pereira",
         "matheus1903@gmail.com": "Matheus Castro",
@@ -11,10 +10,12 @@
         "cleytonufrpe@gmail.com": "Cleyton Cavunt",
         "matehs123@gmail.com": "Matheus Castro",
         "viniciuscastrinho123@gmail.com": "Vinicius",
-        "samuel123@gmail.com": "Samuelll"
+        "samuel123@gmail.com": "Samuelll",
+        "cassianinho123@gmail.com": "Cassiano",
+        "jao123@gmail.com": "João",
+        "jujubinha1234@gmail.com": "Júlia Roberta"
     },
     "idade": {
-        "joao.silva@email.com": 33,
         "maria.souza@email.com": 28,
         "carlos.pereira@email.com": 45,
         "matheus1903@gmail.com": 27,
@@ -25,10 +26,12 @@
         "cleytonufrpe@gmail.com": "30",
         "matehs123@gmail.com": "18",
         "viniciuscastrinho123@gmail.com": "12",
-        "samuel123@gmail.com": "19"
+        "samuel123@gmail.com": "19",
+        "cassianinho123@gmail.com": "18",
+        "jao123@gmail.com": "18",
+        "jujubinha1234@gmail.com": "18"
     },
     "senha": {
-        "joao.silva@email.com": "joao123",
         "maria.souza@email.com": "maria456",
         "carlos.pereira@email.com": "carlos789",
         "matheus1903@gmail.com": "matheus123",
@@ -39,24 +42,28 @@
         "cleytonufrpe@gmail.com": "102030",
         "matehs123@gmail.com": "eae1234",
         "viniciuscastrinho123@gmail.com": "vinidonzelo",
-        "samuel123@gmail.com": "samuel333"
+        "samuel123@gmail.com": "samuel333",
+        "cassianinho123@gmail.com": "54321",
+        "jao123@gmail.com": "123456",
+        "jujubinha1234@gmail.com": "1223344"
     },
     "livros_digitais": {
-        "joao.silva@email.com": 10,
         "maria.souza@email.com": 15,
         "carlos.pereira@email.com": 6,
         "matheus1903@gmail.com": 14,
         "julinhacastro1907@gmail.com": 17,
         "albuquerquegustavo@hotmail.com": 3,
-        "matheusdecastro1903@gmail.com": "2",
-        "pedroaalmeida@gmail.com": "2",
-        "cleytonufrpe@gmail.com": "7",
-        "matehs123@gmail.com": "3",
-        "viniciuscastrinho123@gmail.com": "0",
-        "samuel123@gmail.com": "3"
+        "matheusdecastro1903@gmail.com": 2,
+        "pedroaalmeida@gmail.com": 2,
+        "cleytonufrpe@gmail.com": 7,
+        "matehs123@gmail.com": 3,
+        "viniciuscastrinho123@gmail.com": 0,
+        "samuel123@gmail.com": 3,
+        "cassianinho123@gmail.com": 99,
+        "jao123@gmail.com": 5,
+        "jujubinha1234@gmail.com": "6"
     },
     "livros_fisicos": {
-        "joao.silva@email.com": 8,
         "maria.souza@email.com": 4,
         "carlos.pereira@email.com": 12,
         "matheus1903@gmail.com": 7,
@@ -67,10 +74,12 @@
         "cleytonufrpe@gmail.com": "10",
         "matehs123@gmail.com": "4",
         "viniciuscastrinho123@gmail.com": "0",
-        "samuel123@gmail.com": "4"
+        "samuel123@gmail.com": "4",
+        "cassianinho123@gmail.com": "99",
+        "jao123@gmail.com": "5",
+        "jujubinha1234@gmail.com": "7"
     },
     "preferencia": {
-        "joao.silva@email.com": "Físico",
         "maria.souza@email.com": "Digital(kindle)",
         "carlos.pereira@email.com": "Físico",
         "matheus1903@gmail.com": "Digital(kindle)",
@@ -81,10 +90,12 @@
         "cleytonufrpe@gmail.com": "Livro físico",
         "matehs123@gmail.com": "Livro físico",
         "viniciuscastrinho123@gmail.com": "Livro físico",
-        "samuel123@gmail.com": "Livro físico"
+        "samuel123@gmail.com": "Livro físico",
+        "cassianinho123@gmail.com": "Digital(kindle)",
+        "jao123@gmail.com": "Livro físico",
+        "jujubinha1234@gmail.com": "Livro físico"
     },
     "horas_estudo": {
-        "joao.silva@email.com": 6,
         "maria.souza@email.com": 9,
         "carlos.pereira@email.com": 5,
         "matheus1903@gmail.com": 12,
@@ -95,10 +106,12 @@
         "cleytonufrpe@gmail.com": "12",
         "matehs123@gmail.com": "2",
         "viniciuscastrinho123@gmail.com": "0",
-        "samuel123@gmail.com": "10"
+        "samuel123@gmail.com": "10",
+        "cassianinho123@gmail.com": "148",
+        "jao123@gmail.com": "9",
+        "jujubinha1234@gmail.com": "5"
     },
     "horas_entretenimento": {
-        "joao.silva@email.com": 5,
         "maria.souza@email.com": 3,
         "carlos.pereira@email.com": 7,
         "matheus1903@gmail.com": 6,
@@ -109,10 +122,12 @@
         "cleytonufrpe@gmail.com": "5",
         "matehs123@gmail.com": "4",
         "viniciuscastrinho123@gmail.com": "148",
-        "samuel123@gmail.com": "3"
+        "samuel123@gmail.com": "3",
+        "cassianinho123@gmail.com": "0",
+        "jao123@gmail.com": "3",
+        "jujubinha1234@gmail.com": "4"
     },
     "estado": {
-        "joao.silva@email.com": "São Paulo",
         "maria.souza@email.com": "Rio de Janeiro",
         "carlos.pereira@email.com": "Minas Gerais",
         "matheus1903@gmail.com": "Distrito Federal",
@@ -123,10 +138,12 @@
         "cleytonufrpe@gmail.com": "Pernambuco",
         "matehs123@gmail.com": "Amazonas",
         "viniciuscastrinho123@gmail.com": "Bahia",
-        "samuel123@gmail.com": "Alagoas"
+        "samuel123@gmail.com": "Alagoas",
+        "cassianinho123@gmail.com": "Pernambuco",
+        "jao123@gmail.com": "Acre",
+        "jujubinha1234@gmail.com": "Acre"
     },
     "cidade": {
-        "joao.silva@email.com": "São Paulo",
         "maria.souza@email.com": "Rio de Janeiro",
         "carlos.pereira@email.com": "Belo Horizonte",
         "matheus1903@gmail.com": "Brasília",
@@ -137,6 +154,9 @@
         "cleytonufrpe@gmail.com": "Recife",
         "matehs123@gmail.com": "Anamã",
         "viniciuscastrinho123@gmail.com": "Xique-Xique",
-        "samuel123@gmail.com": "Arapiraca"
+        "samuel123@gmail.com": "Arapiraca",
+        "cassianinho123@gmail.com": "Sertânia",
+        "jao123@gmail.com": "Feijó",
+        "jujubinha1234@gmail.com": "Feijó"
     }
 }

@@ -428,11 +428,11 @@ def calcular_estudo(entrada, label_saida, horas_estudo_semanais):
     if total_horas == 0:
         mensagem = "Vamos começar a estudar? Nunca é tarde!"
     elif total_horas < 200:
-        mensagem = f"Você vai estudar aproximadamente {total_horas:.1f} horas em {anos} anos. Pode aumentar o ritmo!"
+        mensagem = f"Você vai estudar aproximadamente {total_horas:.1f} horas em {anos} anos. \nPode aumentar o ritmo!"
     elif total_horas < 800:
         mensagem = f"Bom trabalho! Estimativa de {total_horas:.1f} horas de estudo em {anos} anos."
     else:
-        mensagem = f"Excelente! Você dedicará cerca de {total_horas:.1f} horas aos estudos em {anos} anos. Continue assim!"
+        mensagem = f"Excelente! Você dedicará cerca de {total_horas:.1f} horas aos estudos em {anos} anos. \nContinue assim!"
 
     label_saida.configure(text=mensagem, text_color="green")
 
@@ -486,11 +486,11 @@ def leitura_calculada(entrada, label_saida, horas_entretenimento_semanais):
     if total_horas == 0:
         mensagem = "Que tal começar a aproveitar mais suas leituras para entretenimento?"
     elif total_horas < 200:
-        mensagem = f"Você dedicará cerca de {total_horas:.1f} horas para leitura de entretenimento em {anos} anos. Tente aumentar!"
+        mensagem = f"Você dedicará cerca de {total_horas:.1f} horas \npara leitura de entretenimento em {anos} anos.Tente aumentar!"
     elif total_horas < 800:
-        mensagem = f"Legal! Estimativa de {total_horas:.1f} horas de leitura para entretenimento em {anos} anos."
+        mensagem = f"Legal! Estimativa de {total_horas:.1f} horas de leitura \npara entretenimento em {anos} anos."
     else:
-        mensagem = f"Fantástico! Você terá cerca de {total_horas:.1f} horas de leitura para entretenimento em {anos} anos. Aproveite bastante!"
+        mensagem = f"Fantástico! Você terá cerca de {total_horas:.1f} horas de leitura \npara entretenimento em {anos} anos. Aproveite bastante!"
 
     label_saida.configure(text=mensagem, text_color="green")
 
@@ -970,11 +970,14 @@ def salvar_dados_atualizacao(email_antigo, label_aviso,frame_principal,
 # Criar nova mensagem após limpar os widgets
     label_sucesso = ctk.CTkLabel(
         frame_principal,
-        text="✅ Dados atualizados com sucesso!",
+        text="✅ Dados atualizados com sucesso!\nReiniciando o sistema",
         text_color="green",
         font=("Arial", 14, "bold")
     )
     label_sucesso.pack(pady=10)
+    time.sleep(3)
+    sair_sistema()
+    
 
 
     
